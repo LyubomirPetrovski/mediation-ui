@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Poll } from './poll/model/poll.entity';
-import { PollService } from './poll/poll.service';
+import { PollService } from './poll.service';
+import { Poll } from './model/poll.entity';
 import { first } from 'rxjs/operators';
-import { DisplayProperty } from './shared/class/display-property.class';
+import { DisplayProperty } from '../shared/class/display-property.class';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-poll',
+  templateUrl: './poll.component.html',
+  styles: []
 })
-export class AppComponent {
+export class PollComponent {
   public form: FormGroup;
   public saved = false;
 
@@ -55,4 +55,5 @@ export class AppComponent {
 
     return false;
   }
+
 }

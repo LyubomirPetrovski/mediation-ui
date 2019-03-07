@@ -1,0 +1,52 @@
+  <div class="p-grid" [formGroup]="form">
+      <div class="p-col-10">
+
+          <div class="ui-fluid">
+            <p-autoComplete 
+              #nkpdAutoComplete
+              [suggestions]="suggestedNKPDs$ | async"
+              formControlName="nkpd"
+              forceSelection="true" 
+              dataKey="id" 
+              field="displayName"              
+              placeholder="Код по НКПД или част от наименованието"
+              [inputStyle]="{'width': '100%'}">
+            </p-autoComplete>
+          </div>
+
+      </div>
+      <div class="p-col-2">
+
+          <div class="ui-fluid ui-inputgroup">
+              <input type="text" pInputText formControlName="count" >
+              <span class="ui-inputgroup-addon">бр.</span>      
+          </div>
+
+      </div>
+  </div>
+
+  <!-- <div class="form-group col-md-12" [formGroup]="form">
+
+        <div class="col-md-10">
+          <div class="ui-fluid">
+            <p-autoComplete 
+              #nkpdAutoComplete
+              [suggestions]="suggestedNKPDs$ | async"
+              formControlName="nkpd"
+              forceSelection="true" 
+              dataKey="id" 
+              field="displayName"              
+              placeholder="Код по НКПД или част от наименованието"
+              [inputStyle]="{'width': '100%'}">
+            </p-autoComplete>
+          </div>
+        </div>
+        
+        <div class="col-md-2">
+          <div class="ui-inputgroup">
+              <input type="text" pInputText formControlName="count" >
+              <span class="ui-inputgroup-addon">бр.</span>      
+          </div>
+        </div>
+
+  </div> -->

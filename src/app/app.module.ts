@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 import { PanelModule } from 'primeng/components/panel/panel';
@@ -10,26 +10,46 @@ import { ButtonModule } from 'primeng/components/button/button';
 import { InputTextModule } from 'primeng/components/inputtext/inputtext';
 import { DropdownModule } from 'primeng/components/dropdown/dropdown';
 import { AutoCompleteModule } from 'primeng/components/autocomplete/autocomplete';
+import {SpinnerModule} from 'primeng/components/spinner/spinner';
+import {CheckboxModule} from 'primeng/components/checkbox/checkbox';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {CaptchaModule} from 'primeng/captcha';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
-import { FooterComponent } from './footer/footer.component';
-import { CompanyInfoComponent } from './company-info/company-info.component';
+import { CompanyInfoComponent } from './poll/company-info/company-info.component';
 import { AppSettingsService } from './shared/services/app-settings.service';
-import { CompanyInfoService } from './company-info/company-info.service';
+import { CompanyInfoService } from './poll/company-info/company-info.service';
+import { PollComponent } from './poll/poll.component';
+import { EnumPipe } from './shared/pipes/enum.pipe';
+import { PollService } from './poll/poll.service';
+import { NkpdCountComponent } from './poll/nkpd-count/nkpd-count.component';
+import { NkpdCountListComponent } from './poll/nkpd-count-list/nkpd-count-list.component';
+import { HomeComponent } from './home/home.component';
+import { PollQuestionsComponent } from './poll/poll-questions/poll-questions.component';
+import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent,
-    FooterComponent,
-    CompanyInfoComponent
+    CompanyInfoComponent,
+    PollComponent,
+
+    // Pipes
+    EnumPipe,
+
+    NkpdCountComponent,
+    NkpdCountListComponent,
+    HomeComponent,
+    PollQuestionsComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
+    NoopAnimationsModule,
+    AppRoutingModule,
+    LayoutModule,
 
     // PrimeNG
     PanelModule,
@@ -37,11 +57,16 @@ import { CompanyInfoService } from './company-info/company-info.service';
     InputTextModule,
     FormsModule,
     DropdownModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    SpinnerModule,
+    CheckboxModule,
+    InputTextareaModule,
+    CaptchaModule
   ],
   providers: [
     AppSettingsService,
-    CompanyInfoService
+    CompanyInfoService,
+    PollService
   ],
   bootstrap: [AppComponent]
 })

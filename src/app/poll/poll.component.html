@@ -1,0 +1,29 @@
+<div *ngIf="!saved" class="p-grid">
+
+  <div class="p-col-2"></div>
+
+  <div class="p-col-8 p-md-8 p-lg-8">
+      <div class="p-grid">
+          <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="p-col-12">
+              <h1>Анкетно проучване</h1>
+
+              <app-company-info [inputForm]="form"></app-company-info>
+              <app-poll-questions [inputForm]="form"></app-poll-questions>
+
+              <!-- <p-captcha siteKey="" (onResponse)="onCaptchaResponse($event)"></p-captcha> -->
+
+              <button type="submit" pButton label="Изпрати" [disabled]="!form.valid"></button>
+          </form>        
+      </div>
+  </div>
+
+  <div class="p-col-2"></div>
+</div>
+
+<div *ngIf="saved" >
+  <div class="alert alert-success">
+      <p class="display-4 text-center">
+          <strong>Анкетата е изпратена успешно</strong>
+      </p>
+  </div>
+</div>

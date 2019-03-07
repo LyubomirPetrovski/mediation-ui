@@ -29,6 +29,20 @@ export class ApiService {
     return this.httpClient.get<T>(this.buildUrl(url), options);
   }
 
+  public post(url: string, payload: any);
+  public post<T>(url: string, payload: T): Observable<T>;
+
+  public post<T>(url: string, payload: any): Observable<T> {
+    const options = {
+      headers: new HttpHeaders(
+        {
+            'Content-Type': 'application/json',
+        }),
+    };
+
+    return this.httpClient.post<T>(this.buildUrl(url), payload, options);
+  }
+
   // private objToSearchParams(obj): HttpParams {
   //   const params: HttpParams = new HttpParams();
   //   for (const key in obj) {

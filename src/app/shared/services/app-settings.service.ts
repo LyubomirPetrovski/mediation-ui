@@ -5,5 +5,6 @@ import { environment } from '../../../environments/environment';
 export class AppSettingsService {
     public getBaseUrl(): string {
         return environment.baseUrl;
+        // return 'http://localhost:5000/';
     }
 }

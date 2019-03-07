@@ -1,0 +1,247 @@
+<!-- <div class="p-grid"> -->
+  <div class="p-col">
+
+    <h2>Анкета</h2>
+    <p>Въпросите са отворени и отговаряте в свободен текст.</p>
+
+    <div [formGroup]="form">
+
+      <div class="form-group">
+        <label>1. Каква е структурата на професионалната квалификация на работещите във Вашата фирма:</label>
+        <div class="ui-fluid">
+          <p-dropdown [options]="professionalQualifications" [formControl]="form.controls.qualification1"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="form-group">
+          <label>2. Кои са основните длъжности във Вашата фирма, изискващи специалисти със средно образование?</label>
+          <div class="ui-fluid">
+            <p-autoComplete 
+              #secEduNKPDAutoComplete
+              [suggestions]="suggestedSecEduNKPDs$ | async"
+              formControlName="secEduPos2"
+              forceSelection="true" 
+              dataKey="id" 
+              field="displayName"
+              placeholder="Код по НКПД или част от наименованието (Задължително)"
+              [multiple]="true" 
+              [inputStyle]="{'width': '100%'}">
+            </p-autoComplete>
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label>3. Кои са основните длъжности във Вашата фирма, изискващи специалисти с висше образование?</label>
+          <div class="ui-fluid">
+            <p-autoComplete 
+              #highEduNKPDAutoComplete
+              [suggestions]="suggestedHighEduNKPDs$ | async"
+              formControlName="highEduPos3"
+              forceSelection="true" 
+              dataKey="id" 
+              field="displayName"              
+              placeholder="Код по НКПД или част от наименованието (Задължително)"
+              [multiple]="true"
+              [inputStyle]="{'width': '100%'}">
+            </p-autoComplete>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label>4. Какъв процент от вашите работници са с образование несъответстващо на длъжността, която заемат?</label>
+        <label>а/ % работни места за специалисти със средно образование заети от лица с висше образование</label>
+        <div class="ui-inputgroup">
+            <input type="text" pInputText [formControl]="form.controls.secEduPosOccupiedByHighEdu4">
+            <span class="ui-inputgroup-addon">%</span>      
+        </div>
+        <label>б/ % работни места за специалисти с висше образование заети от лица със средно образование</label>
+        <div class="ui-inputgroup">
+          <input type="text" pInputText [formControl]="form.controls.highEduPosOccupiedBySecEdu4">   
+          <span class="ui-inputgroup-addon">%</span>      
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>5. Имате ли незаети длъжности във вашата компания към настоящия момент?</label>
+        <div class="ui-fluid">
+          <p-dropdown [options]="vacantPositions" [formControl]="form.controls.haveVacantPos5" [style]="{'width': '500px'}"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>6. От колко работещи със средно образование още се нуждаете във Вашата фирма и по какви специалности?</label>
+        <div class="ui-inputgroup">
+          <input type="text" pInputText [formControl]="form.controls.vacantPosSecEduCount6">
+          <span class="ui-inputgroup-addon">бр.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+          <app-nkpd-count-list [inputArray]="form.controls['vacantPosSecEduCodes6']"></app-nkpd-count-list>  
+      </div>
+
+      <div class="form-group">
+        <label>7. От колко работещи с висше образование още се нуждаете във Вашата фирма и по какви специалности? </label>
+        <div class="ui-inputgroup">
+          <input type="text" pInputText [formControl]="form.controls.vacantPosHighEduCount7">
+          <span class="ui-inputgroup-addon">бр.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+          <app-nkpd-count-list [inputArray]="form.controls['vacantPosHighEduCodes7']"></app-nkpd-count-list>  
+      </div>
+
+      <div class="form-group">
+        <label>8. Колко работещи още със средно образование смятате, че ще са необходими след 5 години да работят във вашата фирма и по какви специалности?</label>
+        <div class="ui-inputgroup">
+          <input type="text" pInputText [formControl]="form.controls.secEduInFiveYearsCount8">
+          <span class="ui-inputgroup-addon">бр.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+          <app-nkpd-count-list [inputArray]="form.controls['secEduPosInFiveYearsCodes8']"></app-nkpd-count-list>  
+      </div>
+
+      <div class="form-group">
+        <label>9. Колко работещи още с висше образование смятате, че ще са необходими след 5 години да работят във вашата фирма и по какви специалности ?</label>
+        <div class="ui-inputgroup">
+          <input type="text" pInputText [formControl]="form.controls.highEduInFiveYearsCount9">
+          <span class="ui-inputgroup-addon">бр.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+          <app-nkpd-count-list [inputArray]="form.controls['highEduPosInFiveYearsCodes9']"></app-nkpd-count-list>  
+      </div>
+
+      <div class="form-group">
+        <label>10. Поддържа ли Вашата фирма контакти с институции за професионално образование и обучение?</label>
+        <div class="ui-fluid">
+          <p-dropdown [options]="yesNoEnum" [formControl]="form.controls.haveContactsWithEduInstitutions10"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>11. Ако отговора на въпрос 10 е „да“, моля отговорете имате ли готовност като работодател да участвате в: (Може да се посочи повече от 1 отговор)</label>
+        <div class="p-grid p-nogutter">
+          <div class="p-col-12">
+            <p-checkbox [formControl]="form.controls['participationInExaminationCommittees11']" binary="true" label="Участие в изпитни комисии" labelStyleClass="d-inline"></p-checkbox>
+          </div>
+          <div class="p-col-12">
+            <p-checkbox [formControl]="form.controls.curriculumDevelopmentInSecEdu11" binary="true" label="Разработване на учебни планове и програми за специалности от средното образование свързани с предмета на дейност на вашата фирма образователни програми" labelStyleClass="d-inline"></p-checkbox>
+          </div>
+          <div class="p-col-12">
+            <p-checkbox [formControl]="form.controls.haveInternship11" binary="true" label="Осигуряване на условия за стажуване и чиракуване" labelStyleClass="d-inline"></p-checkbox>
+          </div>
+          <div class="p-col-12">
+            <p-checkbox [formControl]="form.controls.eduStandartDevelopment11" binary="true" label="Разработване на образователни/професионални стандарти" labelStyleClass="d-inline"></p-checkbox>
+          </div>
+          <div class="p-col-12">
+            <p-checkbox [formControl]="form.controls.participationInOtherInitiatives11" binary="true" label="Други" labelStyleClass="d-inline"></p-checkbox>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Посочете за кои специалности</label>
+        <div class="ui-fluid">
+          <textarea class="form-control" rows="5" [formControl]="form.controls.secEduParticipationMajors11" placeholder="Специалности"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>12. Имате ли готовност като работодател да участвате в разработването на учебни планове и програми за специалности от висшето образование свързани с предмета на дейност на вашата фирма?</label>
+        <label>Ако желаете да участвате посочете за кои специалности.</label>
+        <textarea class="form-control" rows="5" [formControl]="form.controls.highEduParticipationMajors12" placeholder="Специалности"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>13. Въвеждането на дуалната система на обучение, „едно учебно място - едно работно място“ без активното участие на работодателите не може да се реализира. Има ли готовност вашата фирма да предостави условия за учебна практика на ученици и студенти и да участва пряко в дуалните форми на обучение?</label>
+        <label>Ако желаете да участвате посочете за кои специалности.</label>
+        <textarea class="form-control" rows="5" [formControl]="form.controls.participateDualEduMajors13" placeholder="Специалности"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>14. За какъв брой ученици годишно може да организира обучение и стажуване във Вашата фирма и по какви специалности? (Моля, посочете)</label>
+        <label>Брой ученици</label>
+        <div class="ui-inputgroup">
+            <input type="text" pInputText [formControl]="form.controls.dualEduCountPerYear14">
+            <span class="ui-inputgroup-addon">бр.</span>      
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Специалности</label>
+        <textarea class="form-control" rows="5" [formControl]="form.controls.ableDualEduMajors14" placeholder="Специалности"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>15. Вашата фирма има ли нагласата при необходимост да съдейства за внедряване на иновативните технологии и научни продукти от висшите училища в бизнеса, както и на работодателите, които имат идеи и проекти за създаване на такива?</label>
+        <div class="ui-fluid">
+          <p-dropdown [options]="yesNoEnum" [formControl]="form.controls.acceptInovations15"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>16. Какво е вашето мнение за нивото на теоретическата и практическа подготовка на новоназначените млади специалисти със средно образование във вашата фирма?</label>
+          <div class="p-grid ">
+            <div class="p-col-3">
+              <div class="p-grid p-dir-col">
+                <div class="p-col">
+                    <label>Теоретическа подготовка</label>
+                      <p-dropdown [options]="educationalTrainingEnum" [formControl]="form.controls.secEduTheory16" ></p-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="p-col-3">
+              <div class="p-grid p-dir-col">
+                <div class="p-col">
+                    <label>Практическа подготовка</label>
+                    <p-dropdown [options]="educationalTrainingEnum" [formControl]="form.controls.secEduPractive16" ></p-dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label>17. Какво е вашето мнение за нивото на теоретическата и практическа подготовка на новоназначените млади специалисти с висше образование във вашата фирма?</label>
+          <div class="p-grid ">
+            <div class="p-col-3">
+              <div class="p-grid p-dir-col">
+                <div class="p-col">
+                    <label>Теоретическа подготовка</label>
+                      <p-dropdown [options]="educationalTrainingEnum" [formControl]="form.controls.highEduTheory17" ></p-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="p-col-3">
+              <div class="p-grid p-dir-col">
+                <div class="p-col">
+                    <label>Практическа подготовка</label>
+                    <p-dropdown [options]="educationalTrainingEnum" [formControl]="form.controls.highEduPractice17" ></p-dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label>18. Каква е Вашата оценка за съответствието между предлаганото професионално образование по професии/специалности и потребностите на регионалния и местния пазар на труда?</label>
+        <div class="ui-fluid">
+          <p-dropdown [options]="proffEducationComplienceEnum" [formControl]="form.controls.profEduCompliance18"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>19. Считате ли за необходимо да бъдат извършени промени в списъка на професиите, по които се извършва професионално образование и обучение?</label>
+        <div class="ui-fluid">
+          <p-dropdown [options]="modifyNKPDListEnum" [formControl]="form.controls.modifyNKPDList19"></p-dropdown>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<!-- </div> -->

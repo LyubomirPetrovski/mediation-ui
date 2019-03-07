@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/1053b20e-2179-40f7-889e-9d6397a2e6d3/resourceGroups/WebServiceEurope/providers/Microsoft.Web/sites/CompanyMediationPoll",
+    "appService.deploySubpath": ""
+}
