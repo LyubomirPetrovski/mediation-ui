@@ -2,10 +2,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { PollComponent } from './poll/poll.component';
+import { LoginComponent } from './login/login.component';
 
-const routes: Routes = [  
-  { path: 'poll', component: PollComponent},
-  { path: '', component: HomeComponent }
+const routes: Routes = [    
+  { path: 'poll', component: PollComponent },
+  //{ path: 'user', component: UserComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent },
+
+  // otherwise redirect to home
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

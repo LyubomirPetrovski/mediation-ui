@@ -15,6 +15,7 @@ import {CheckboxModule} from 'primeng/components/checkbox/checkbox';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {CaptchaModule} from 'primeng/captcha';
 import { AppRoutingModule } from './app-routing.module';
+import { LayoutModule } from './layout/layout.module';
 
 import { AppComponent } from './app.component';
 import { CompanyInfoComponent } from './poll/company-info/company-info.component';
@@ -27,7 +28,9 @@ import { NkpdCountComponent } from './poll/nkpd-count/nkpd-count.component';
 import { NkpdCountListComponent } from './poll/nkpd-count-list/nkpd-count-list.component';
 import { HomeComponent } from './home/home.component';
 import { PollQuestionsComponent } from './poll/poll-questions/poll-questions.component';
-import { LayoutModule } from './layout/layout.module';
+import { LoginComponent } from './login/login.component';
+import { AuthService } from './shared/services/auth.service';
+import { StorageService } from './shared/services/storage.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,8 @@ import { LayoutModule } from './layout/layout.module';
     NkpdCountComponent,
     NkpdCountListComponent,
     HomeComponent,
-    PollQuestionsComponent
+    PollQuestionsComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +70,9 @@ import { LayoutModule } from './layout/layout.module';
   providers: [
     AppSettingsService,
     CompanyInfoService,
-    PollService
+    PollService,
+    AuthService,
+    StorageService
   ],
   bootstrap: [AppComponent]
 })

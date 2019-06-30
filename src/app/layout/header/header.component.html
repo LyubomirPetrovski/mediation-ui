@@ -6,4 +6,11 @@
       <a routerLink='poll' class="nav-item nav-link">Анкета</a>
     </div>
   </div>  
+  <div class="navbar-expand ml-auto">
+    <div class="navbar-nav">
+      <a *ngIf="!currentUser" routerLink='/login' class="nav-item nav-link">Login</a>
+      <a *ngIf="currentUser" routerLink='' class="nav-item nav-link">{{ currentUser.companyName }}</a>
+      <a *ngIf="currentUser" routerLink='/login' class="nav-item nav-link">Logout</a>
+    </div>
+  </div>
 </nav>
