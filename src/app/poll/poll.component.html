@@ -7,7 +7,7 @@
           <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="p-col-12">
               <h1>Анкетно проучване</h1>
 
-              <app-company-info [inputForm]="form"></app-company-info>
+              <app-company-info-poll [inputForm]="form"></app-company-info-poll>
               <app-poll-questions [inputForm]="form"></app-poll-questions>
 
               <!-- <p-captcha siteKey="" (onResponse)="onCaptchaResponse($event)"></p-captcha> -->

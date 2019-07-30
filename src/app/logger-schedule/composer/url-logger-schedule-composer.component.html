@@ -1,0 +1,15 @@
+<div class="p-grid">
+  <div class="p-col-12">
+      <sn-logger-schedule-filter
+        (filterChange)="onFilterChange($event)" >
+      </sn-logger-schedule-filter>
+  </div>
+
+  <div class="p-col-12">
+      <sn-logger-schedule-calendar
+        [loggerScheduleData]="loggerScheduleData$ | async"
+        [slotNumbersData]="slotNumbersData$ | async"
+        [disabled]="loading$ | async" >
+      </sn-logger-schedule-calendar>
+  </div>
+</div>

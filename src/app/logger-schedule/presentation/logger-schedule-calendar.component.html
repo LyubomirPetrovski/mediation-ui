@@ -1,0 +1,56 @@
+<div class="p-grid">
+  <p-table 
+    [columns]="columns"
+    [value]="loggers"
+    [frozenValue]="numbers"
+    [scrollable]="true"
+    class="table-rotated-header">
+
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col [style.width]="100 + '%'">
+        <col *ngFor="let col of columns" [style.width]="31 + 'px'">
+      </colgroup>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 100%;"></th>
+        <ng-container *ngFor="let col of columns">
+          <th class="rotate-90">
+            <div>
+              {{ col.header }}
+            </div>
+          </th>
+        </ng-container>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="caption">
+      <div style="text-align: right;">
+        <button pButton type="button" label="Submit Changes" (click)="onSubmitChanges()"></button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="frozenrows" let-rowData let-columns="columns">
+      <tr>
+        <td style="text-align: right;">{{ SlotNumberKind[rowData.numberKind] }}</td>
+        <td></td>
+        <td style="text-align: center;" *ngFor="let slot of rowData.slots">
+          {{ slot.number }}
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+      <tr [ngClass]="isOddRowIndex(rowIndex + 1) ? oddRowColor : evenRowColor">
+        <td style="text-align: right;">{{ rowData.loggerName }}</td>
+        <td style="text-align: center;">{{ rowData.maxGames }}</td>
+        <td *ngFor="let slot of rowData.timeSlots">
+          <sn-shedule-slot [selectableSlot]="slot" [slot]="slot"></sn-shedule-slot>
+        </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>

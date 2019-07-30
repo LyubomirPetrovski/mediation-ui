@@ -16,9 +16,12 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import {CaptchaModule} from 'primeng/captcha';
 import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from './layout/layout.module';
+import { TableModule } from 'primeng/table';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { CalendarModule } from 'primeng/calendar';
 
 import { AppComponent } from './app.component';
-import { CompanyInfoComponent } from './poll/company-info/company-info.component';
+import { CompanyInfoPollComponent } from './poll/company-info/company-info-poll.component';
 import { AppSettingsService } from './shared/services/app-settings.service';
 import { CompanyInfoService } from './poll/company-info/company-info.service';
 import { PollComponent } from './poll/poll.component';
@@ -31,11 +34,16 @@ import { PollQuestionsComponent } from './poll/poll-questions/poll-questions.com
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './shared/services/auth.service';
 import { StorageService } from './shared/services/storage.service';
+import { LoggerScheduleCalendarComponent } from './logger-schedule/presentation/logger-schedule-calendar.component';
+import { SheduleSlotComponent } from './logger-schedule/presentation/shedule-slot.component';
+import { SelectableSlotDirective } from './logger-schedule/presentation/selectable-slot.directive';
+import { LoggerScheduleFilterComponent } from './logger-schedule/presentation/logger-schedule-filter.component';
+import { UrlLoggerScheduleComposerComponent } from './logger-schedule/composer/url-logger-schedule-composer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompanyInfoComponent,
+    CompanyInfoPollComponent,
     PollComponent,
 
     // Pipes
@@ -45,7 +53,12 @@ import { StorageService } from './shared/services/storage.service';
     NkpdCountListComponent,
     HomeComponent,
     PollQuestionsComponent,
-    LoginComponent
+    LoginComponent,
+    LoggerScheduleCalendarComponent,
+    SheduleSlotComponent,
+    SelectableSlotDirective,
+    LoggerScheduleFilterComponent,
+    UrlLoggerScheduleComposerComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +78,10 @@ import { StorageService } from './shared/services/storage.service';
     SpinnerModule,
     CheckboxModule,
     InputTextareaModule,
-    CaptchaModule
+    CaptchaModule,
+    TableModule,
+    MultiSelectModule,
+    CalendarModule
   ],
   providers: [
     AppSettingsService,

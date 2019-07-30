@@ -11,11 +11,11 @@ import { KID } from './model/company-KID.entity';
 
 
 @Component({
-  selector: 'app-company-info',
-  templateUrl: './company-info.component.html',
+  selector: 'app-company-info-poll',
+  templateUrl: './company-info-poll.component.html',
   styles: []
 })
-export class CompanyInfoComponent implements OnInit, AfterViewInit {
+export class CompanyInfoPollComponent implements OnInit, AfterViewInit {
   @Input()
   set inputForm(inputFormArg: FormGroup) {
     inputFormArg.addControl('companyName', new FormControl('', Validators.required));
