@@ -19,13 +19,13 @@ export class SheduleSlotComponent implements OnInit {
       return 'selected';
     }
 
-    if (this.slot.available) {
-      return 'available';
-    }
-
     if (this.slot.onShift) {
       return 'onShift';
     }
+
+    if (this.slot.available) {
+      return 'available';
+    }    
 
     return 'notSet';
   }

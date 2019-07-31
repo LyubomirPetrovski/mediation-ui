@@ -15,8 +15,8 @@ export interface LoggerSchedule {
 }
 
 export interface ScheduleTimeSlot {
-    from: Time;
-    to: Time
+    from: Time24h;
+    to: Time24h
     available: boolean;
     shift: LoggerShiftRef;
 }
@@ -31,7 +31,7 @@ export interface LoggingGameRef extends MonikerRef {
     leagueRef: DocumentRef;
 }
 
-export interface Time {
+export interface Time24h {
     hour: number;
     minute: number;
 }

@@ -1,6 +1,6 @@
 import { Directive, Input, HostListener } from "@angular/core";
-import { ScheduleTimeSlot } from "../model/logger-schedule.model";
-import { LoggerScheduleCalendarComponent } from "./logger-schedule-calendar.component";
+import { ScheduleTimeSlot } from "../../model/logger-schedule.model";
+import { LoggerScheduleCalendarComponent } from "../logger-schedule-calendar.component";
 
 @Directive({ selector: '[selectableSlot]'})
 export class SelectableSlotDirective {

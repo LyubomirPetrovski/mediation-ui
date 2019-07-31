@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { SlotNumberKind, SlotNumber } from '../model/slot-numbers.model';
-import { ScheduleTimeSlot, LoggerScheduleModel } from '../model/logger-schedule.model';
+import { ScheduleTimeSlot, LoggerScheduleModel, ChangeStatus } from '../model/logger-schedule.model';
 import { ColumnMetadata } from '../model/column-metadata.model';
 import * as moment from 'moment';
+import { ContextMenu } from 'primeng/contextmenu';
+import { MenuItem } from 'primeng/components/common/menuitem';
 
 @Component({
   selector: 'sn-logger-schedule-calendar',
@@ -11,15 +13,14 @@ import * as moment from 'moment';
 })
 export class LoggerScheduleCalendarComponent implements OnInit {
   public columns: ColumnMetadata[];
-  public dailySlots: ScheduleTimeSlot[] = [];
+  /*  */
   public loggers: LoggerScheduleModel[] = [];
 
-  // Should come from server
-  // public numbers: SlotNumber[];
-  // public loadedLoggers: LoggerSchedule[];  
+  public contextMenuItems: MenuItem[] = [];
 
   private selecting: boolean;
   private selectedSlots: ScheduleTimeSlot[] = [];
+  private shiftChanges: ScheduleTimeSlot[] = [];
 
   SlotNumberKind: typeof SlotNumberKind = SlotNumberKind;
 
@@ -33,16 +34,12 @@ export class LoggerScheduleCalendarComponent implements OnInit {
   }
   @Input() slotNumbersData: SlotNumber[]
   @Input() disabled: boolean;
+  @ViewChild('contextMenu') public contextMenu: ContextMenu;
 
   constructor() { }
 
   ngOnInit() {
-    // this.initTestNumberRecords();
-    // this.initTestLoggerSchedules();
-
     this.initColumns();
-    this.initSlots();
-    // this.loadSchedule();    
   }
 
   public handleMouseDown(slot: ScheduleTimeSlot) {
@@ -64,8 +61,98 @@ export class LoggerScheduleCalendarComponent implements OnInit {
     this.selecting = false;
   }
 
-  private isOddRowIndex(rowIndex: number) {
-    return !!(rowIndex % 2);
+  public handleRowRightClick(slot: ScheduleTimeSlot, mouseEvent: MouseEvent) {
+    const found = this.selectedSlots.indexOf(slot);
+    if (found < 0) {
+      this.clearSelection();
+      slot.selected = true;
+      this.selectedSlots = [slot];
+    }
+    this.initContextMenu(slot);
+    this.contextMenu.show(mouseEvent);
+  }
+
+  private initContextMenu(slot: ScheduleTimeSlot) {
+    this.contextMenuItems = [
+      {
+        label: 'Assign Selected Game - P1',
+        command: (event: Event) => { this.handleAssignSelectedGame(); }
+      },
+      {
+        label: 'Assign Shift (No Game) - P1',
+        command: (event: Event) => { this.handleAssignShiftNoGame(); }
+      },
+      {
+        label: 'Assign Default Shift - P1',
+        command: (event: Event) => { this.handleAssignDefaultShift(); }
+      }
+    ];
+
+    if (this.selectedSlots.some(slot => slot.onShift)) {
+      this.contextMenuItems.push({
+        label: 'Unassign Shift - P1',
+        command: (event: Event) => { this.handleUnassignShift(); }
+      })
+    }
+  }
+
+  private handleAssignSelectedGame() {
+
+  }
+
+  private handleAssignShiftNoGame() {
+    this.selectedSlots.forEach(slot => {
+      if (!slot.onShift) {
+        slot.onShift = true;
+
+        /*
+          if slot to assign is part of shiftChanges and its ChangeStatus=Unassigned, meaning shift has been unassigned but not submited, then just remove it from shiftChanges and don't send it to server
+          if slot to assign is not part of shiftChanges, then mark shift as Assigned and send it to server on submit
+        */
+        const existingIndex = this.shiftChanges.indexOf(slot);
+        if (existingIndex > -1) {
+          if (slot.changeStatus == ChangeStatus.Unassigned) {
+            this.shiftChanges.splice(existingIndex, 1);
+          }
+        } else {
+          slot.changeStatus = ChangeStatus.Assigned;
+
+          this.shiftChanges.push(slot);
+        }
+      }
+    });
+
+    this.clearSelection();
+
+    console.log(this.shiftChanges);
+  }
+
+  private handleAssignDefaultShift() {
+
+  }
+
+  private handleUnassignShift() {
+    this.selectedSlots.forEach(slot => {
+      if (slot.onShift) {
+        slot.onShift = false;
+
+        /* 
+          if slot to unassugn is part of shiftChanges, meaning shift has been assigned but not submited, then just remove it from shiftChanges and don't send it to server
+          if slot to unassign is not part of shiftChanges, then mark shift as Unassigned and send it to server on submit, so server will delete it
+        */
+        const existingIndex = this.shiftChanges.indexOf(slot);
+        if (existingIndex > -1) {
+          this.shiftChanges.splice(existingIndex, 1);
+        } else {
+          slot.changeStatus = ChangeStatus.Unassigned;
+          this.shiftChanges.push(slot);
+        }        
+      }
+    });
+
+    this.clearSelection();
+
+    console.log(this.shiftChanges);
   }
 
   private clearSelection() {
@@ -73,6 +160,10 @@ export class LoggerScheduleCalendarComponent implements OnInit {
     this.selectedSlots = [];
   }
 
+
+  private isOddRowIndex(rowIndex: number) {
+    return !!(rowIndex % 2);
+  }
 
   private initColumns() {
     this.columns = [
@@ -128,7 +219,9 @@ export class LoggerScheduleCalendarComponent implements OnInit {
     ]
   }
 
-  private initSlots() {
+  private initDailySlots(): ScheduleTimeSlot[] {
+    var dailySlots = [];
+
     var start = moment('12:00 AM', 'hh:mm A');
     var end = moment(start).add(1, 'day');
 
@@ -136,26 +229,29 @@ export class LoggerScheduleCalendarComponent implements OnInit {
       var halfHourOffset = moment(start).add(30, 'minutes')
 
       var slot = <ScheduleTimeSlot>{
-        id: start.format('hhmmA'),
+        id: start.format('HHmm'),
         from: { hour: start.hour(), minute: start.minute() } ,
         to: { hour: halfHourOffset.hour(), minute: halfHourOffset.minute() },
         available: false,
         onShift: false,
         selected: false
       };
-      this.dailySlots.push(slot);
+      dailySlots.push(slot);
 
       start = halfHourOffset;
     }
     while (start < end)
+
+    return dailySlots;
   }
 
   private loadSchedule() {
     this._loggerScheduleData.forEach(ll => {
-      // makes a copy of dailySlots for the specified logger
-      var dailySlots = [...this.dailySlots];
+      /* List of empty half-hour slots that will be updated with loggerScheduleData comming from server */
+      // var dailySlots = JSON.parse(JSON.stringify(this.dailySlots));
+      var dailySlots = this.initDailySlots();
 
-      // integrate loaded slots into daily slots
+      // update daily slots with loaded slots from server
       ll.timeSlots.forEach(slot => {
         dailySlots[dailySlots.findIndex(s => s.id === slot.id)] = slot;
       });

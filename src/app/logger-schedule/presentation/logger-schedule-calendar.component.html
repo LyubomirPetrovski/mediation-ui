@@ -1,4 +1,10 @@
 <div class="p-grid">
+  <p-contextMenu 
+    [global]="false" #contextMenu 
+    [model]="contextMenuItems"
+    [style]="{'white-space':'nowrap', 'width': 'auto'}">
+  </p-contextMenu>
+  
   <p-table 
     [columns]="columns"
     [value]="loggers"
@@ -44,10 +50,10 @@
 
     <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
       <tr [ngClass]="isOddRowIndex(rowIndex + 1) ? oddRowColor : evenRowColor">
-        <td style="text-align: right;">{{ rowData.loggerName }}</td>
+        <td style="text-align: right;">{{ rowData.logger.name }}</td>
         <td style="text-align: center;">{{ rowData.maxGames }}</td>
         <td *ngFor="let slot of rowData.timeSlots">
-          <sn-shedule-slot [selectableSlot]="slot" [slot]="slot"></sn-shedule-slot>
+          <sn-shedule-slot [selectableSlot]="slot" [contextMenuSlot]="slot" [slot]="slot"></sn-shedule-slot>
         </td>
       </tr>
     </ng-template>

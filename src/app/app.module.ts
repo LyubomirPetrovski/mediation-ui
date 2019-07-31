@@ -19,6 +19,7 @@ import { LayoutModule } from './layout/layout.module';
 import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CalendarModule } from 'primeng/calendar';
+import { ContextMenuModule } from 'primeng/contextmenu';
 
 import { AppComponent } from './app.component';
 import { CompanyInfoPollComponent } from './poll/company-info/company-info-poll.component';
@@ -36,9 +37,10 @@ import { AuthService } from './shared/services/auth.service';
 import { StorageService } from './shared/services/storage.service';
 import { LoggerScheduleCalendarComponent } from './logger-schedule/presentation/logger-schedule-calendar.component';
 import { SheduleSlotComponent } from './logger-schedule/presentation/shedule-slot.component';
-import { SelectableSlotDirective } from './logger-schedule/presentation/selectable-slot.directive';
+import { SelectableSlotDirective } from './logger-schedule/presentation/directives/selectable-slot.directive';
 import { LoggerScheduleFilterComponent } from './logger-schedule/presentation/logger-schedule-filter.component';
 import { UrlLoggerScheduleComposerComponent } from './logger-schedule/composer/url-logger-schedule-composer.component';
+import { ContextMenuSlotDirective } from './logger-schedule/presentation/directives/context-menu.directive';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import { UrlLoggerScheduleComposerComponent } from './logger-schedule/composer/u
     LoggerScheduleCalendarComponent,
     SheduleSlotComponent,
     SelectableSlotDirective,
+    ContextMenuSlotDirective,
     LoggerScheduleFilterComponent,
     UrlLoggerScheduleComposerComponent
   ],
@@ -81,7 +84,8 @@ import { UrlLoggerScheduleComposerComponent } from './logger-schedule/composer/u
     CaptchaModule,
     TableModule,
     MultiSelectModule,
-    CalendarModule
+    CalendarModule,
+    ContextMenuModule
   ],
   providers: [
     AppSettingsService,

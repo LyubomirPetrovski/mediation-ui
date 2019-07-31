@@ -11,16 +11,29 @@ export interface ScheduleTimeSlot {
     /* In the form hh:mm AM/PM */
     id: string;
 
-    from: Time,
-    to: Time,
+    from: Time12h,
+    to: Time12h,
 
     available: boolean,
     onShift: boolean,
     selected: boolean,
-    gameRef: MonikerRef
+    gameRef: MonikerRef,
+
+    changeStatus: ChangeStatus
 }
 
-export interface Time {
+/* 12h Time Format */
+export interface Time12h {
     hour: number;
     minute: number;
+    /* AM/PM */
+    meridiemAbbr: string;
+}
+
+export enum ChangeStatus {
+    Unmodified = 0,
+  
+    Assigned,
+    Unassigned,
+    GameRemoved
 }
