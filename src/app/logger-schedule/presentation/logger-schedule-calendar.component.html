@@ -1,16 +1,25 @@
 <div class="p-grid">
   <p-contextMenu 
-    [global]="false" #contextMenu 
+    #contextMenu
+    [global]="false"
     [model]="contextMenuItems"
     [style]="{'white-space':'nowrap', 'width': 'auto'}">
   </p-contextMenu>
   
   <p-table 
+    id="table-rotated-header"
+    #calendar    
     [columns]="columns"
     [value]="loggers"
-    [frozenValue]="numbers"
+    [frozenValue]="slotNumbers"
     [scrollable]="true"
-    class="table-rotated-header">
+    [rows]="50"
+    [virtualScroll]="true"
+    (onLazyLoad)="loadDataOnScroll($event)"
+    [lazy]="true"
+    [totalRecords]="loggersCount"
+    scrollHeight="520px"
+    [virtualRowHeight]="34">
 
     <ng-template pTemplate="colgroup" let-columns>
       <colgroup>
@@ -33,14 +42,20 @@
     </ng-template>
 
     <ng-template pTemplate="caption">
-      <div style="text-align: right;">
-        <button pButton type="button" label="Submit Changes" (click)="onSubmitChanges()"></button>
+      <div class="ui-g">
+        <div [style.visibility]="hasShiftChanges ? 'visible' : 'hidden'" class="ui-g-2" style="text-align: left;">
+          <p-message severity="warn" text="Changes made"></p-message>
+        </div>
+        <div class="ui-g-8"></div>
+        <div class="ui-g-2" style="text-align: right;">
+          <button pButton type="button" label="Submit Changes" (click)="onSubmitChanges()"></button>
+        </div>
       </div>
     </ng-template>
 
     <ng-template pTemplate="frozenrows" let-rowData let-columns="columns">
       <tr>
-        <td style="text-align: right;">{{ SlotNumberKind[rowData.numberKind] }}</td>
+        <td style="text-align: right; padding-right: 5px;">{{ SlotNumberKind[rowData.numberKind] }}</td>
         <td></td>
         <td style="text-align: center;" *ngFor="let slot of rowData.slots">
           {{ slot.number }}
@@ -49,14 +64,22 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
-      <tr [ngClass]="isOddRowIndex(rowIndex + 1) ? oddRowColor : evenRowColor">
-        <td style="text-align: right;">{{ rowData.logger.name }}</td>
-        <td style="text-align: center;">{{ rowData.maxGames }}</td>
+      <tr >
+        <td class="loggerName">{{ rowData.logger.name }}</td>
+        <td class="maxGames">{{ rowData.maxGames }}</td>
         <td *ngFor="let slot of rowData.timeSlots">
-          <sn-shedule-slot [selectableSlot]="slot" [contextMenuSlot]="slot" [slot]="slot"></sn-shedule-slot>
+          <sn-schedule-slot [slot]="slot"></sn-schedule-slot>
         </td>
       </tr>
     </ng-template>
+
+    <ng-template pTemplate="loadingbody" let-columns="columns">
+      <tr style="height:34px">
+        <td *ngFor="let col of columns">
+            <div class="loading-text"></div>
+        </td>
+      </tr>
+  </ng-template>
 
   </p-table>
 </div>

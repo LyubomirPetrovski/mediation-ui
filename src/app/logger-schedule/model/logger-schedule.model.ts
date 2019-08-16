@@ -1,5 +1,10 @@
 import { MonikerRef } from "src/app/shared/entities/moniker-ref.entity";
 
+export interface ScheduleModel {
+    scheduleState: ScheduleState,
+    loggers: LoggerScheduleModel[]
+}
+
 export interface LoggerScheduleModel {
     logger: MonikerRef,
     maxGames: number,
@@ -8,26 +13,26 @@ export interface LoggerScheduleModel {
 }
 
 export interface ScheduleTimeSlot {
-    /* In the form hh:mm AM/PM */
+    /* In the form hhmm */
     id: string;
+    /* Mongo id */
+    shiftId: string;
+    loggerId: string,
+    gameRef: MonikerRef,
 
-    from: Time12h,
-    to: Time12h,
+    from: Time24h,
+    to: Time24h,
 
     available: boolean,
     onShift: boolean,
     selected: boolean,
-    gameRef: MonikerRef,
 
     changeStatus: ChangeStatus
 }
 
-/* 12h Time Format */
-export interface Time12h {
+export interface Time24h {
     hour: number;
     minute: number;
-    /* AM/PM */
-    meridiemAbbr: string;
 }
 
 export enum ChangeStatus {
@@ -36,4 +41,11 @@ export enum ChangeStatus {
     Assigned,
     Unassigned,
     GameRemoved
+}
+
+export enum ScheduleState {
+    Unknown,
+
+    Append,
+    Reload
 }

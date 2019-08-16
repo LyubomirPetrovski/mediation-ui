@@ -20,11 +20,11 @@ import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { MessageModule } from 'primeng/message';
 
 import { AppComponent } from './app.component';
 import { CompanyInfoPollComponent } from './poll/company-info/company-info-poll.component';
 import { AppSettingsService } from './shared/services/app-settings.service';
-import { CompanyInfoService } from './poll/company-info/company-info.service';
 import { PollComponent } from './poll/poll.component';
 import { EnumPipe } from './shared/pipes/enum.pipe';
 import { PollService } from './poll/poll.service';
@@ -36,11 +36,11 @@ import { LoginComponent } from './login/login.component';
 import { AuthService } from './shared/services/auth.service';
 import { StorageService } from './shared/services/storage.service';
 import { LoggerScheduleCalendarComponent } from './logger-schedule/presentation/logger-schedule-calendar.component';
-import { SheduleSlotComponent } from './logger-schedule/presentation/shedule-slot.component';
-import { SelectableSlotDirective } from './logger-schedule/presentation/directives/selectable-slot.directive';
+import { ScheduleSlotComponent } from './logger-schedule/presentation/schedule-slot.component';
 import { LoggerScheduleFilterComponent } from './logger-schedule/presentation/logger-schedule-filter.component';
 import { UrlLoggerScheduleComposerComponent } from './logger-schedule/composer/url-logger-schedule-composer.component';
 import { ContextMenuSlotDirective } from './logger-schedule/presentation/directives/context-menu.directive';
+import { NomService } from './poll/company-info/company-info.service';
 
 @NgModule({
   declarations: [
@@ -57,8 +57,7 @@ import { ContextMenuSlotDirective } from './logger-schedule/presentation/directi
     PollQuestionsComponent,
     LoginComponent,
     LoggerScheduleCalendarComponent,
-    SheduleSlotComponent,
-    SelectableSlotDirective,
+    ScheduleSlotComponent,
     ContextMenuSlotDirective,
     LoggerScheduleFilterComponent,
     UrlLoggerScheduleComposerComponent
@@ -85,11 +84,12 @@ import { ContextMenuSlotDirective } from './logger-schedule/presentation/directi
     TableModule,
     MultiSelectModule,
     CalendarModule,
-    ContextMenuModule
+    ContextMenuModule,
+    MessageModule
   ],
   providers: [
     AppSettingsService,
-    CompanyInfoService,
+    NomService,
     PollService,
     AuthService,
     StorageService

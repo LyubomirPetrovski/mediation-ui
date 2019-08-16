@@ -1,4 +1,4 @@
 export const environment = {
-  baseUrl: 'https://companymediationapi.azurewebsites.net/',
+  baseUrl: 'http://localhost/',
   production: true
 };

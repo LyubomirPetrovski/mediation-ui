@@ -14,10 +14,10 @@ export class ApiService {
     protected settings: AppSettingsService
   ) { }
 
-  public get(url: string, params?: HttpParams);
-  public get<T>(url: string, params?: HttpParams): Observable<T>;
+  public get(url: string, params?: any);
+  public get<T>(url: string, params?: any): Observable<T>;
 
-  public get<T>(url: string, params?: HttpParams): Observable<T> {
+  public get<T>(url: string, params?: any): Observable<T> {
     const options = {
       headers: new HttpHeaders(
         {

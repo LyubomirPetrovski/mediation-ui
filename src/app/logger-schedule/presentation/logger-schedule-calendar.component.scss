@@ -1,4 +1,4 @@
-.table-rotated-header {
+#table-rotated-header {
     th.rotate-90 {
         vertical-align: bottom;
         height: 90px;
@@ -12,16 +12,28 @@
 
     td {
         padding: 0;
+
+        &.loggerName {
+            text-align: right; 
+            padding: 0px 5px 0px 0px;
+        }
+        &.maxGames {
+            text-align: center;
+        }
     }
 
-    .oddRowColor {
-        background-color: lightgrey;
+    table.ui-table-scrollable-body-table {
+        max-height: 600px;
     }
-    .evenRowColor {
-        background-color: white;
-    }
-}
 
-.ui-table table {
-    border-collapse: !important unset;
+    div.ui-table-scrollable-header-box {
+        margin-right: 17px !important;
+    }
+
+    // .oddRowColor {
+    //     background-color: lightgrey;
+    // }
+    // .evenRowColor {
+    //     background-color: white;
+    // }
 }

@@ -6,10 +6,13 @@
   </div>
 
   <div class="p-col-12">
-      <sn-logger-schedule-calendar
-        [loggerScheduleData]="loggerScheduleData$ | async"
-        [slotNumbersData]="slotNumbersData$ | async"
-        [disabled]="loading$ | async" >
-      </sn-logger-schedule-calendar>
+    <sn-logger-schedule-calendar
+      #calendar
+      [schedule]="loggersDailySchedule$ | async"
+      [paging]="listPaging"
+      [loggersCount]="loggersCount$ | async"
+      (submitChanges)="onSubmitChanges($event)"
+      (scroll)="onCalendarScroll($event)" >
+    </sn-logger-schedule-calendar>
   </div>
 </div>

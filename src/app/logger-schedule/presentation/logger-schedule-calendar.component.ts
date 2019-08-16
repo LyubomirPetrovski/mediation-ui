@@ -1,64 +1,226 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter, ChangeDetectionStrategy, OnChanges, SimpleChanges, HostListener, AfterViewInit, ElementRef, OnDestroy } from '@angular/core';
 import { SlotNumberKind, SlotNumber } from '../model/slot-numbers.model';
-import { ScheduleTimeSlot, LoggerScheduleModel, ChangeStatus } from '../model/logger-schedule.model';
-import { ColumnMetadata } from '../model/column-metadata.model';
+import { ScheduleTimeSlot, LoggerScheduleModel, ChangeStatus, ScheduleModel, ScheduleState } from '../model/logger-schedule.model';
 import * as moment from 'moment';
 import { ContextMenu } from 'primeng/contextmenu';
 import { MenuItem } from 'primeng/components/common/menuitem';
+import { LazyLoadEvent } from 'primeng/primeng';
+import { ColumnMetadata } from '../model/column-metadata.model';
+import { Paging } from 'src/app/shared/models/paging.model';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'sn-logger-schedule-calendar',
   templateUrl: './logger-schedule-calendar.component.html',
   styleUrls: ['./logger-schedule-calendar.component.scss']
 })
-export class LoggerScheduleCalendarComponent implements OnInit {
+export class LoggerScheduleCalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   public columns: ColumnMetadata[];
-  /*  */
-  public loggers: LoggerScheduleModel[] = [];
-
   public contextMenuItems: MenuItem[] = [];
+  public shiftChanges: ScheduleTimeSlot[] = [];
+  
+  public get hasShiftChanges() {
+    return this.shiftChanges.length > 0;
+  }
 
-  private selecting: boolean;
-  private selectedSlots: ScheduleTimeSlot[] = [];
-  private shiftChanges: ScheduleTimeSlot[] = [];
+  // private selecting: boolean;
+  private firstSelectedSlot: ScheduleTimeSlot;
+  private selectedSlots: ScheduleTimeSlot[] = [];  
 
   SlotNumberKind: typeof SlotNumberKind = SlotNumberKind;
 
-  private _loggerScheduleData: LoggerScheduleModel[];
+  /* Full daily list of logger availability, shifts and not set time slots */
+  public loggers: LoggerScheduleModel[] = [];
+
+  /* Available or OnShift time slots  */
+  // private _loggersDailySchedule: LoggerScheduleModel[];
   @Input()
-  public set loggerScheduleData(value: LoggerScheduleModel[]) {
+  public set schedule(value: ScheduleModel) {
     if (value) {
-      this._loggerScheduleData = value;
-      this.loadSchedule();
+      switch (value.scheduleState) {
+        case ScheduleState.Append: {
+          this.loadSchedule(value.loggers);
+
+          break;
+        }
+        case ScheduleState.Reload: {
+          this.loggers = [];
+          this.shiftChanges = []
+          this.loadSchedule(value.loggers);
+
+          break;
+        }
+      }
+      // this.shiftChanges = [];
+      // this._loggersDailySchedule = value;
+      
     }
   }
-  @Input() slotNumbersData: SlotNumber[]
-  @Input() disabled: boolean;
-  @ViewChild('contextMenu') public contextMenu: ContextMenu;
 
-  constructor() { }
+  @Input() slotNumbers: SlotNumber[]
+  //@Input() disabled: boolean;
+  @Input() paging: Paging = new Paging();
+  @Input() loggersCount: number;
+
+  @Output() submitChanges = new EventEmitter<ScheduleTimeSlot[]>();
+  @Output() scroll = new EventEmitter();
+  
+  @ViewChild('contextMenu') public contextMenu: ContextMenu;
+  @ViewChild('calendar') public calendar: Table;
+
+  // @HostListener('click', ['$event']) 
+  // public onSlotClickEvent(event: MouseEvent) {
+  //   this.onSlotClick(event);
+  // }
+
+  // @HostListener('mouseup', ['$event'])
+  // public onSlotMouseupEvent(event: MouseEvent) {
+  //   this.onSlotMouseUp(event);
+  // }
+
+  constructor(private elRef: ElementRef) { }
+
+  public onSlotClick(e) {
+    event.stopPropagation();
+    event.preventDefault();    
+
+    var slotComponent = (e.target as HTMLElement).parentElement;
+    if (slotComponent.tagName !== 'SN-SCHEDULE-SLOT') return;
+
+    var td = slotComponent.parentElement;
+    var tr = td.parentElement;
+
+    if (tr.tagName !== "TR" && td.tagName !== "TD") return;
+
+    const slotRowIndex = (tr as any).rowIndex;
+    const slotColIndex = (td as any).cellIndex - 2; //remove first two columns as we only care about schedule-slot components
+
+    // this.onSlotMouseDown(this.loggers[slotRowIndex].timeSlots[slotColIndex]);
+    this.onSlotMouseDown(slotRowIndex, slotColIndex);
+  }
+
+  public onSlotMouseUp(e) {
+    event.stopPropagation();
+    event.preventDefault();    
+
+    var slotComponent = (e.target as HTMLElement).parentElement;
+    if (slotComponent.tagName !== 'SN-SCHEDULE-SLOT') return;
+
+    var td = slotComponent.parentElement;
+    var tr = td.parentElement;
+
+    if (tr.tagName !== "TR" || td.tagName !== "TD" || !e.ctrlKey) return;
+
+    const slotRowIndex = (tr as any).rowIndex;
+    const slotColIndex = (td as any).cellIndex - 2; //remove first two columns as we only care about schedule-slot components
+
+    this.handleSlotMouseUp(slotRowIndex, slotColIndex);
+  }
 
   ngOnInit() {
     this.initColumns();
   }
 
-  public handleMouseDown(slot: ScheduleTimeSlot) {
+  ngAfterViewInit() {
+    this.elRef.nativeElement.addEventListener('click', this.onSlotClick.bind(this), false);
+    this.elRef.nativeElement.addEventListener('mouseup', this.onSlotMouseUp.bind(this), false);
+  }
+
+  ngOnDestroy() {
+    this.elRef.nativeElement.removeEventListener('click', this.onSlotClick);
+    this.elRef.nativeElement.removeEventListener('mouseup', this.onSlotMouseUp);
+  }
+
+  public getSlotClass(slot: ScheduleTimeSlot) {
+    if (slot.selected) {
+      return 'selected';
+    }
+
+    if (slot.onShift) {
+      return 'onShift';
+    }
+
+    if (slot.available) {
+      return 'available';
+    }    
+
+    return 'notSet';
+  }
+  
+  public onSubmitChanges() {
+    this.submitChanges.emit(this.shiftChanges);
+    this.shiftChanges = [];
+  }
+
+  public loadDataOnScroll(event: LazyLoadEvent) {
+    this.scroll.emit({ skip: this.loggers.length, take: event.rows });
+  }
+
+  public onSlotMouseDown(slotRowIndex, slotColIndex) {
     this.clearSelection();
 
-    this.selecting = true;
+    //---------
+    const oldSlot = this.loggers[slotRowIndex].timeSlots[slotColIndex];
+
+    var changedSlot = Object.assign({}, oldSlot, { selected: true });
+    this.firstSelectedSlot = changedSlot;
+
+    this.loggers[slotRowIndex].timeSlots[slotColIndex] = changedSlot;
+    //---------
+
+    //slot.selected = true;
+
+    this.selectedSlots.push(changedSlot);
+
+    console.log('onSlotMouseDown finished');
+  }
+
+  public onSlotMouseOver(slot: ScheduleTimeSlot) {
+    // if (!this.selecting) return;
+
     slot.selected = true;
     this.selectedSlots.push(slot);
   }
 
-  public handleMouseEnter(slot: ScheduleTimeSlot) {
-    if (!this.selecting) return;
+  public handleSlotMouseUp(slotRowIndex, slotColIndex) {
+    const endSlot = this.loggers[slotRowIndex].timeSlots[slotColIndex];
 
-    slot.selected = true;
-    this.selectedSlots.push(slot);
+    var firstSelectedSlotIndex = this.loggers[slotRowIndex].timeSlots.indexOf(this.firstSelectedSlot);
+    var lastSelectedSlotIndex = this.loggers[slotRowIndex].timeSlots.indexOf(endSlot);
+    
+    const loggerSlots = this.loggers[slotRowIndex].timeSlots;
+
+    if (lastSelectedSlotIndex > firstSelectedSlotIndex) {
+      this.selectSlots(loggerSlots, firstSelectedSlotIndex, lastSelectedSlotIndex);
+    } else {
+      this.selectSlots(loggerSlots, lastSelectedSlotIndex, firstSelectedSlotIndex);
+    }
   }
 
-  public handleMouseUp(slot: ScheduleTimeSlot) {
-    this.selecting = false;
+  private selectSlots(loggerSlots, startIndex, endIndex) {
+    for (var i = startIndex; i <= endIndex; i++) {
+      this.selectSlot(loggerSlots, i);
+    }
+  }
+
+  private selectSlot(loggerSlots, slotIndex) {
+    const oldSlot = loggerSlots[slotIndex];
+    if (!oldSlot.selected) {
+      var changedSlot = Object.assign({}, oldSlot, { selected: true });
+      loggerSlots[slotIndex] = changedSlot;
+
+      this.selectedSlots.push(changedSlot);
+    }    
+  }
+
+  private deselectSlot(loggerSlots, slotIndex) {
+    const oldSlot = loggerSlots[slotIndex];
+    if (oldSlot.selected) {
+      var changedSlot = Object.assign({}, oldSlot, { selected: false });
+      loggerSlots[slotIndex] = changedSlot;
+
+      this.selectedSlots.splice(slotIndex, 0);
+    }   
   }
 
   public handleRowRightClick(slot: ScheduleTimeSlot, mouseEvent: MouseEvent) {
@@ -73,20 +235,16 @@ export class LoggerScheduleCalendarComponent implements OnInit {
   }
 
   private initContextMenu(slot: ScheduleTimeSlot) {
-    this.contextMenuItems = [
-      {
-        label: 'Assign Selected Game - P1',
-        command: (event: Event) => { this.handleAssignSelectedGame(); }
-      },
-      {
-        label: 'Assign Shift (No Game) - P1',
-        command: (event: Event) => { this.handleAssignShiftNoGame(); }
-      },
-      {
-        label: 'Assign Default Shift - P1',
-        command: (event: Event) => { this.handleAssignDefaultShift(); }
-      }
-    ];
+    this.contextMenuItems = [];
+
+    if (!slot.onShift) {
+      this.contextMenuItems.push(
+        {
+          label: 'Assign Shift (No Game) - P1',
+          command: (event: Event) => { this.handleAssignShiftNoGame(); }
+        }
+      )
+    }
 
     if (this.selectedSlots.some(slot => slot.onShift)) {
       this.contextMenuItems.push({
@@ -94,6 +252,18 @@ export class LoggerScheduleCalendarComponent implements OnInit {
         command: (event: Event) => { this.handleUnassignShift(); }
       })
     }
+
+    //TODO uncomment when loading games functionality is ready
+    // {
+    //   label: 'Assign Selected Game - P1',
+    //   command: (event: Event) => { this.handleAssignSelectedGame(); }
+    // },
+    // {
+    //   label: 'Assign Default Shift - P1',
+    //   command: (event: Event) => { this.handleAssignDefaultShift(); }
+    // }
+
+    
   }
 
   private handleAssignSelectedGame() {
@@ -156,15 +326,18 @@ export class LoggerScheduleCalendarComponent implements OnInit {
   }
 
   private clearSelection() {
-    this.selectedSlots.forEach(s => s.selected = false);
+    this.selectedSlots.forEach(s => {
+      var loggerSlots = this.loggers.find(l => l.logger.id === s.loggerId).timeSlots;
+      this.deselectSlot(loggerSlots, loggerSlots.indexOf(s));
+    });
     this.selectedSlots = [];
   }
-
 
   private isOddRowIndex(rowIndex: number) {
     return !!(rowIndex % 2);
   }
 
+  //TODO: generate columns automatically but not hard-coding them
   private initColumns() {
     this.columns = [
       { field: 'maxGames', header: 'Max Games' },
@@ -219,7 +392,8 @@ export class LoggerScheduleCalendarComponent implements OnInit {
     ]
   }
 
-  private initDailySlots(): ScheduleTimeSlot[] {
+  /* Generates a list of empty time slots for a day per logger */
+  private initDailySlots(loggerId: string): ScheduleTimeSlot[] {
     var dailySlots = [];
 
     var start = moment('12:00 AM', 'hh:mm A');
@@ -234,7 +408,10 @@ export class LoggerScheduleCalendarComponent implements OnInit {
         to: { hour: halfHourOffset.hour(), minute: halfHourOffset.minute() },
         available: false,
         onShift: false,
-        selected: false
+        selected: false,
+        loggerId: loggerId,
+        changeStatus: ChangeStatus.Unmodified,
+        gameRef: null
       };
       dailySlots.push(slot);
 
@@ -245,24 +422,27 @@ export class LoggerScheduleCalendarComponent implements OnInit {
     return dailySlots;
   }
 
-  private loadSchedule() {
-    this._loggerScheduleData.forEach(ll => {
+  private loadSchedule(loggerScheduleRows: LoggerScheduleModel[]) {
+    // this.loggers = [];
+
+    loggerScheduleRows.forEach(loggerRow => {
       /* List of empty half-hour slots that will be updated with loggerScheduleData comming from server */
-      // var dailySlots = JSON.parse(JSON.stringify(this.dailySlots));
-      var dailySlots = this.initDailySlots();
+      var dailySlots = this.initDailySlots(loggerRow.logger.id);
 
       // update daily slots with loaded slots from server
-      ll.timeSlots.forEach(slot => {
+      loggerRow.timeSlots.forEach(slot => {
         dailySlots[dailySlots.findIndex(s => s.id === slot.id)] = slot;
       });
 
       var logger = <LoggerScheduleModel>{
-        logger: ll.logger,
-        maxGames: ll.maxGames,
+        logger: loggerRow.logger,
+        maxGames: loggerRow.maxGames,
         timeSlots: dailySlots
       }
 
       this.loggers.push(logger);
     })
+
+    console.log(`loggers ${this.loggers.length}`);
   }  
 }

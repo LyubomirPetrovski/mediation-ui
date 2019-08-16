@@ -10,4 +10,19 @@ export class ObjectUtils {
                         label: enumObj[key]
                     })));
     }
+
+    /*
+        Checks whether a property exists in object
+        Use:
+        ObjectUtils.propExists(obj, 'game.league') - checks whether 'obj' has property 'game.league'
+    */
+    public static propExists(obj, key: string): boolean {
+        return key.split('.').every(function (x) {
+        if (typeof obj !== 'object' || obj === null || !(x in obj)) {
+            return false;
+        }
+        obj = obj[x];
+        return true;
+        });
+    }
 }

@@ -10,6 +10,7 @@ export class LoggerScheduleFilterComponent implements OnInit {
   public sportOptions;
   public leagueOptions;
   public day;
+  public selectedPhases;
 
   constructor() { 
     // load from server
@@ -27,6 +28,14 @@ export class LoggerScheduleFilterComponent implements OnInit {
       { value: 'leagueId', label: 'MLB' },
       { value: 'leagueId', label: 'Test League' }
     ]
+  }
+
+  onPrevDayClick() {
+
+  }
+
+  onNextDayClick() {
+    
   }
 
   ngOnInit() {

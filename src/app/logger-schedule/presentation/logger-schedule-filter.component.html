@@ -1,59 +1,63 @@
-<div class="p-grid">
-  <div class="p-col-1 ui-fluid">
-    <p-multiSelect 
-      [options]="phasesOptions" 
-      [(ngModel)]="selectedPhases" 
-      [defaultLabel]="'Select Phase'" 
-      filter="true">
-    </p-multiSelect>
-  </div>
+<div class="ui-g">
 
-  <div class="p-col-1 ui-fluid">
-    <!-- <sn-select-sport #sportSelector [(value)]="sportId" [disabled]="disabled">
-    </sn-select-sport>   -->
-    <p-dropdown 
-      [options]="sportOptions"
-      placeholder="Select Sport">
-    </p-dropdown>
-  </div>
+  <div class="ui-g-5">
 
-  <div class="p-col-1 ui-fluid">
-    <!-- <sn-select-league #leagueSelector [sport]="sportId" [(value)]="leagueId" [disabled]="disabled">
-    </sn-select-league> -->
-    <p-dropdown
-      [options]="leagueOptions"
-      placeholder="Select League">
-    </p-dropdown>
-  </div>
+    <div class="ui-g">
+      <div class="ui-g-3 ui-fluid">
+          <p-multiSelect 
+            [options]="phasesOptions" 
+            [(ngModel)]="selectedPhaseIds" 
+            [defaultLabel]="'Select Phase'" 
+            filter="false">
+          </p-multiSelect>
+        </div>
+      
+        <div class="ui-g-3 ui-fluid">
+          <!-- <sn-select-sport #sportSelector [(value)]="sportId" [disabled]="disabled">
+          </sn-select-sport>   -->
+        </div>
+      
+        <div class="ui-g-3 ui-fluid">
+          <!-- <sn-select-league #leagueSelector [sport]="sportId" [(value)]="leagueId" [disabled]="disabled">
+          </sn-select-league> -->
+        </div>
 
-  <div class="p-col-9">
+        <div class="ui-g-1">
+          <button pButton type="button" label="Refresh" (click)="onRefresh()"></button>
+        </div>
+    </div>
 
-  </div>
-
-  <div class="p-col-1 ui-fluid">
-    <p-calendar 
-      [(ngModel)]="day"
-      showIcon="true">
-    </p-calendar>
-  </div>
-
-  <div class="p-col-1">
-    <div class="p-grid">
-      <div class="p-col-6">
-        <button pButton type="button" label="&lt;&lt;" (click)="onPrevDayClick()"></button>
+    <div class="ui-g">
+      <div class="ui-g-3 ui-fluid">
+          <p-calendar 
+            [(ngModel)]="day"
+            showIcon="true">
+          </p-calendar>
+        </div>
+      
+      <div class="ui-g-2">
+        <button pButton type="button" label="&lt;&lt;" (click)="onPrevDay()"></button>
+        <button pButton type="button" label="&gt;&gt;" (click)="onNextDay()"></button>    
       </div>
-      <div class="p-col-6">
-        <button pButton type="button" label="&gt;&gt;" (click)="onNextDayClick()"></button>    
+        
+      <div class="ui-g-3">
+        <span>0 TV Games / 0</span>
+      </div>
+    
+      <div class="ui-g-2">
+        <button pButton type="button" label="Submit Changes" (click)="onSubmitChanges()"></button>
       </div>
     </div>
+  </div>
+
+  <div class="ui-g-6">
     
-  </div>
+    <div class="ui-g-3">
 
-  <div class="p-col-1">
-    <span>1 TV Games / 13</span>
-  </div>
+    </div>
+    <div class="ui-g-3">
+      
+    </div>
 
-  <div class="p-col-2">
   </div>
-
 </div>

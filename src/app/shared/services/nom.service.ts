@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../../shared/services/api.service';
+import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
-import { KID } from './model/company-KID.entity';
 import { HttpParams } from '@angular/common/http';
-import { City } from './model/city.entity';
+import { KID } from 'src/app/poll/company-info/model/company-KID.entity';
+import { City } from 'src/app/poll/company-info/model/city.entity';
 
 @Injectable()
 export class NomService extends ApiService {

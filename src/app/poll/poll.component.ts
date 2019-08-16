@@ -27,6 +27,7 @@ export class PollComponent {
 
       const poll = <Poll>model;
 
+      poll.companyCityId = model.companyCity.id;
       if (this.isEmpty(poll.vacantPosSecEduCodes6)) {
         poll.vacantPosSecEduCodes6 = null;
       }

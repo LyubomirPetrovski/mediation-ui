@@ -7,55 +7,89 @@
 
     <div [formGroup]="form">
 
-      <div class="form-group">
-        <label>1. Наименование на фирмата</label>
-        <input pInputText type="text" class="form-control" [formControl]="form.controls.companyName" placeholder="Задължително" />
-      </div>
-
-      <div class="form-group">
-        <label>Адрес на фирмата</label>
-        <input pInputText type="text" class="form-control" [formControl]="form.controls.companyAddress" placeholder="Задължително" />
-      </div>
-
-      <div class="form-group">
-        <label>ЕИК</label>
-        <input pInputText type="text" class="form-control" [formControl]="form.controls.companyEIK" placeholder="Задължително" />
-      </div>
-
-      <p>2. Контакти</p>
-
       <div class="p-grid">
-        <div class="form-group p-col-5">
-          <label>Мобилен телефон</label>
-          <input pInputText type="text" class="form-control" [formControl]="form.controls.companyPhone" placeholder="Задължително" />
+        <div class="form-group p-col-8">
+          <label>Наименование на фирмата</label>
+          <input pInputText type="text" class="form-control" [formControl]="form.controls.companyName" placeholder="Задължително" />
         </div>
-        <div class="form-group p-col-5">
-          <label>EMail</label>
-          <input pInputText type="text" class="form-control" [formControl]="form.controls.companyEmail" placeholder="Задължително" />
+
+        <div class="form-group p-col-4">
+          <label>ЕИК/БУЛСТАТ</label>
+          <input pInputText type="text" class="form-control" [formControl]="form.controls.companyEIK" placeholder="Задължително" />
         </div>
       </div>
-
-      <div class="form-group">
-          <label>3. Предмет на дейност на фирмата съгласно Класификацията на икономическите дейности (КИД)</label>
+      
+      <div class="p-grid">
+        <div class="form-group p-col-4">
+          <label>Населено място</label>
           <div class="ui-fluid">
-            <p-autoComplete 
-              #kidAutoComplete
-              [suggestions]="suggestedKIDs$ | async"
-              formControlName="companyKID"
-              forceSelection="true" 
-              dataKey="id" 
-              field="displayName"
-              placeholder="Код по КИД или част от наименованието"
-              [inputStyle]="{'width': '100%'}" >
+            <p-autoComplete
+              #cityAutoComplete
+              [suggestions]="suggestedCities$ | async"
+              (onSelect)="onSelectCity($event)"
+              formControlName="companyCity"
+              forceSelection="true"
+              dataKey="id"
+              field="fullName"
+              placeholder="Населено място или част от наименованието" >
             </p-autoComplete>
           </div>
+        </div>
+        <div class="form-group p-col-4">
+          <label>Община</label>
+          <input pInputText type="text" [formControl]="form.controls.municipalityName" class="form-control" disabled>
+        </div>
+        <div class="form-group p-col-4">
+          <label>Област</label>
+          <input pInputText type="text" [formControl]="form.controls.regionName" class="form-control" disabled>
+        </div>
       </div>
 
       <div class="form-group">
-        <label>4. Броят на заетите лица във вашата фирма е:</label>
-        <div class="ui-fluid">
-          <p-dropdown [options]="employedCount" [formControl]="form.controls.companySize" [style]="{'width': '450px'}"></p-dropdown>
+        <label>Адрес</label>
+        <input pInputText type="text" class="form-control" [formControl]="form.controls.companyAddress">
+      </div>
+
+      <div class="p-grid">
+        <div class="form-group p-col-4">
+          <label>Лице за контакт</label>
+          <input pInputText type="text" class="form-control" [formControl]="form.controls.contactPerson" placeholder="Задължително" />
         </div>
+        <div class="form-group p-col-4">
+          <label>Мобилен телефон</label>
+          <input pInputText type="text" class="form-control" [formControl]="form.controls.contactPhone" placeholder="Задължително" />
+        </div>
+        <div class="form-group p-col-4">
+          <label>EMail</label>
+          <input pInputText type="email" class="form-control" [formControl]="form.controls.contactEmail" placeholder="Задължително" email/>
+        </div>
+      </div>
+
+      <div class="p-grid">
+      
+        <div class="form-group p-col-8">
+            <label>Предмет на дейност на фирмата съгласно Класификацията на икономическите дейности (КИД)</label>
+            <div class="ui-fluid">
+              <p-autoComplete 
+                #kidAutoComplete
+                [suggestions]="suggestedKIDs$ | async"
+                formControlName="companyKID"
+                forceSelection="true" 
+                dataKey="id" 
+                field="displayName"
+                placeholder="Код по КИД или част от наименованието"
+                [inputStyle]="{'width': '100%'}" >
+              </p-autoComplete>
+            </div>
+        </div>
+
+        <div class="form-group p-col-4">
+          <label>Броят на заетите лица във вашата фирма е:</label>
+          <div class="ui-fluid">
+            <p-dropdown [options]="employedCount" [formControl]="form.controls.companySize" [style]="{'width': '450px'}"></p-dropdown>
+          </div>
+        </div>
+      
       </div>
 
     </div>

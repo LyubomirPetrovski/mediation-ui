@@ -10,7 +10,7 @@ import { User } from 'src/app/user/user.model';
 })
 export class HeaderComponent implements OnInit {
   private sub: Subscription;
-  private currentUser: User;
+  public currentUser: User;
 
   constructor(
     private storageService: StorageService

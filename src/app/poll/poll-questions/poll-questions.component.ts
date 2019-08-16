@@ -67,6 +67,7 @@ export class PollQuestionsComponent implements OnInit, AfterViewInit {
     inputFormArg.addControl('highEduPractice17', new FormControl('Excellent'));
     inputFormArg.addControl('profEduCompliance18', new FormControl('HighLevelOfCompliance'));
     inputFormArg.addControl('modifyNKPDList19', new FormControl('YesAddStrategicAndPriorityProfessions'));
+    inputFormArg.addControl('notes', new FormControl());
 
     this.form = inputFormArg;
   }
@@ -94,6 +95,7 @@ export class PollQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    
   }
 
   ngAfterViewInit() {

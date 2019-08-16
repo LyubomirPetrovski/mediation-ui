@@ -3,10 +3,13 @@ import { DisplayProperty } from 'src/app/shared/class/display-property.class';
 export class Poll {
     id: string;
     companyName: string;
-    companyAddress: string;
     companyEIK: string;
-    companyPhone: string;
-    companyEmail: string;
+    companyCityId: DisplayProperty;
+    companyAddress: string;
+
+    contactPerson: string;    
+    contactPhone: string;
+    contactEmail: string;
     companyKID: DisplayProperty;
     companySize: string;
 

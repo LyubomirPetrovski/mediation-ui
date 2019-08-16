@@ -70,50 +70,24 @@
 
       <div class="form-group">
         <label>6. От колко работещи със средно образование още се нуждаете във Вашата фирма и по какви специалности?</label>
-        <div class="ui-inputgroup">
-          <input type="text" pInputText [formControl]="form.controls.vacantPosSecEduCount6">
-          <span class="ui-inputgroup-addon">бр.</span>
-        </div>
-      </div>
-
-      <div class="form-group">
-          <app-nkpd-count-list [inputArray]="form.controls['vacantPosSecEduCodes6']"></app-nkpd-count-list>  
+        <app-nkpd-count-list [inputArray]="form.controls['vacantPosSecEduCodes6']"></app-nkpd-count-list>       
       </div>
 
       <div class="form-group">
         <label>7. От колко работещи с висше образование още се нуждаете във Вашата фирма и по какви специалности? </label>
-        <div class="ui-inputgroup">
-          <input type="text" pInputText [formControl]="form.controls.vacantPosHighEduCount7">
-          <span class="ui-inputgroup-addon">бр.</span>
-        </div>
-      </div>
-
-      <div class="form-group">
-          <app-nkpd-count-list [inputArray]="form.controls['vacantPosHighEduCodes7']"></app-nkpd-count-list>  
+        <app-nkpd-count-list [inputArray]="form.controls['vacantPosHighEduCodes7']"></app-nkpd-count-list>  
       </div>
 
       <div class="form-group">
         <label>8. Колко работещи още със средно образование смятате, че ще са необходими след 5 години да работят във вашата фирма и по какви специалности?</label>
-        <div class="ui-inputgroup">
-          <input type="text" pInputText [formControl]="form.controls.secEduInFiveYearsCount8">
-          <span class="ui-inputgroup-addon">бр.</span>
-        </div>
-      </div>
-
-      <div class="form-group">
+        <div class="form-group">
           <app-nkpd-count-list [inputArray]="form.controls['secEduPosInFiveYearsCodes8']"></app-nkpd-count-list>  
+        </div>
       </div>
 
       <div class="form-group">
         <label>9. Колко работещи още с висше образование смятате, че ще са необходими след 5 години да работят във вашата фирма и по какви специалности ?</label>
-        <div class="ui-inputgroup">
-          <input type="text" pInputText [formControl]="form.controls.highEduInFiveYearsCount9">
-          <span class="ui-inputgroup-addon">бр.</span>
-        </div>
-      </div>
-
-      <div class="form-group">
-          <app-nkpd-count-list [inputArray]="form.controls['highEduPosInFiveYearsCodes9']"></app-nkpd-count-list>  
+        <app-nkpd-count-list [inputArray]="form.controls['highEduPosInFiveYearsCodes9']"></app-nkpd-count-list> 
       </div>
 
       <div class="form-group">
@@ -240,6 +214,11 @@
         <div class="ui-fluid">
           <p-dropdown [options]="modifyNKPDListEnum" [formControl]="form.controls.modifyNKPDList19"></p-dropdown>
         </div>
+      </div>
+
+      <div class="form-group">
+        <label>20. Коментар</label>
+        <textarea class="form-control" rows="5" [formControl]="form.controls.notes" placeholder="Изпратете ни коментар, забележка, препоръка..."></textarea>
       </div>
 
     </div>
