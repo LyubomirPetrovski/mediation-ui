@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/user/user.model';
@@ -8,7 +8,7 @@ import { User } from 'src/app/user/user.model';
   templateUrl: './header.component.html',
   styles: []
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   private sub: Subscription;
   public currentUser: User;
 
@@ -17,6 +17,8 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.currentUser = this.storageService.getItem('user')
+
     this.sub = this.storageService.watchStorage().subscribe(changedKey => {
       if (changedKey === 'user') {
         this.currentUser = this.storageService.getItem('user')
@@ -24,4 +26,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 }

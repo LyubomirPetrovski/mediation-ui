@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { PollService } from './poll.service';
+import { PollService } from '../shared/services/poll.service';
 import { Poll, NKPDCount } from './model/poll.entity';
 import { first } from 'rxjs/operators';
 

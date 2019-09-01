@@ -21,13 +21,14 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { MessageModule } from 'primeng/message';
+import { TabViewModule } from 'primeng/components/tabview/tabview';
 
 import { AppComponent } from './app.component';
 import { CompanyInfoPollComponent } from './poll/company-info/company-info-poll.component';
 import { AppSettingsService } from './shared/services/app-settings.service';
 import { PollComponent } from './poll/poll.component';
 import { EnumPipe } from './shared/pipes/enum.pipe';
-import { PollService } from './poll/poll.service';
+import { PollService } from './shared/services/poll.service';
 import { NkpdCountComponent } from './poll/nkpd-count/nkpd-count.component';
 import { NkpdCountListComponent } from './poll/nkpd-count-list/nkpd-count-list.component';
 import { HomeComponent } from './home/home.component';
@@ -41,6 +42,9 @@ import { LoggerScheduleFilterComponent } from './logger-schedule/presentation/lo
 import { UrlLoggerScheduleComposerComponent } from './logger-schedule/composer/url-logger-schedule-composer.component';
 import { ContextMenuSlotDirective } from './logger-schedule/presentation/directives/context-menu.directive';
 import { NomService } from './poll/company-info/company-info.service';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { OpenPositionsComponent } from './company-profile/open-positions/open-positions.component';
+import { CompanyInfoComponent } from './company-profile/company-info/company-info.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +64,10 @@ import { NomService } from './poll/company-info/company-info.service';
     ScheduleSlotComponent,
     ContextMenuSlotDirective,
     LoggerScheduleFilterComponent,
-    UrlLoggerScheduleComposerComponent
+    UrlLoggerScheduleComposerComponent,
+    CompanyProfileComponent,
+    OpenPositionsComponent,
+    CompanyInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +92,8 @@ import { NomService } from './poll/company-info/company-info.service';
     MultiSelectModule,
     CalendarModule,
     ContextMenuModule,
-    MessageModule
+    MessageModule,
+    TabViewModule
   ],
   providers: [
     AppSettingsService,

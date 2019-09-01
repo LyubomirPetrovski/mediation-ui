@@ -4,7 +4,7 @@ import { AutoComplete } from 'primeng/components/autocomplete/autocomplete';
 import { NKPD } from '../poll-questions/model/nkpd.entity';
 import { Observable } from 'rxjs/internal/Observable';
 import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
-import { PollService } from '../poll.service';
+import { PollService } from '../../shared/services/poll.service';
 
 @Component({
   selector: 'app-nkpd-count',

@@ -10,7 +10,7 @@
   <div class="navbar-expand ml-auto">
     <div class="navbar-nav">
       <a *ngIf="!currentUser" routerLink='/login' class="nav-item nav-link">Login</a>
-      <a *ngIf="currentUser" routerLink='' class="nav-item nav-link">{{ currentUser.companyName }}</a>
+      <a *ngIf="currentUser" [routerLink]="['/company', currentUser.companyId]" class="nav-item nav-link">{{ currentUser.companyName }}</a>
       <a *ngIf="currentUser" routerLink='/login' class="nav-item nav-link">Logout</a>
     </div>
   </div>

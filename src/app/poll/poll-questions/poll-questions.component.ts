@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
 import { switchMap, map } from 'rxjs/operators';
-import { PollService } from '../poll.service';
+import { PollService } from '../../shared/services/poll.service';
 import { VacantPositionsEnum } from './model/vacant-positions.enum';
 import { YesNoEnum } from '../../shared/enum/yes-no.enum';
 import { EducationalTrainingEnum } from './model/educational-training.enum';

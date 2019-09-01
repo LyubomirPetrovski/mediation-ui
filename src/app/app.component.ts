@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Poll } from './poll/model/poll.entity';
-import { PollService } from './poll/poll.service';
+import { Poll, NKPDCount } from './poll/model/poll.entity';
+import { PollService } from './shared/services/poll.service';
 import { first } from 'rxjs/operators';
 import { DisplayProperty } from './shared/class/display-property.class';
 
@@ -48,8 +48,8 @@ export class AppComponent {
     }
   }
 
-  private isEmpty(arr: DisplayProperty[]): boolean {
-    if (arr && arr.length === 1 && !arr[0].id) {
+  private isEmpty(arr: NKPDCount[]): boolean {
+    if (arr && arr.length === 1 && arr[0].nkpd !== null) {
       return true;
     }
 

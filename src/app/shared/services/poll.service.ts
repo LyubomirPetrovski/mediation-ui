@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NKPD } from './poll-questions/model/nkpd.entity';
-import { ApiService } from '../shared/services/api.service';
+import { NKPD } from '../../poll/poll-questions/model/nkpd.entity';
+import { ApiService } from './api.service';
 import { HttpParams } from '@angular/common/http';
-import { Poll } from './model/poll.entity';
+import { Poll } from '../../poll/model/poll.entity';
 
 @Injectable()
 export class PollService extends ApiService {
