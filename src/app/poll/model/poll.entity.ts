@@ -19,14 +19,10 @@ export class Poll {
     secEduPosOccupiedByHighEdu4: number;
     highEduPosOccupiedBySecEdu4: number;
     haveVacantPos5: string;
-    vacantPosSecEduCount6: number;
-    vacantPosSecEduCodes6: DisplayProperty[];
-    vacantPosHighEduCount7: number;
-    vacantPosHighEduCodes7: DisplayProperty[];
-    secEduInFiveYearsCount8: number;
-    secEduPosInFiveYearsCodes8: DisplayProperty[];
-    highEduInFiveYearsCount9: number;
-    highEduPosInFiveYearsCodes9: DisplayProperty[];
+    vacantPosSecEduCodes6: NKPDCount[];
+    vacantPosHighEduCodes7: NKPDCount[];
+    secEduPosInFiveYearsCodes8: NKPDCount[];
+    highEduPosInFiveYearsCodes9: NKPDCount[];
     haveContactsWithEduInstitutions10: string;
     participationInExaminationCommittees11: boolean;
     curriculumDevelopmentInSecEdu11: boolean;
@@ -45,4 +41,10 @@ export class Poll {
     highEduPractice17: string;
     profEduCompliance18: string;
     modifyNKPDList19: string;
+    notes: string;
+}
+
+export interface NKPDCount {
+    nkpd: DisplayProperty,
+    count: number
 }

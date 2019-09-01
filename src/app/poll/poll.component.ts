@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PollService } from './poll.service';
-import { Poll } from './model/poll.entity';
+import { Poll, NKPDCount } from './model/poll.entity';
 import { first } from 'rxjs/operators';
-import { DisplayProperty } from '../shared/class/display-property.class';
 
 @Component({
   selector: 'app-poll',
@@ -49,8 +48,8 @@ export class PollComponent {
     }
   }
 
-  private isEmpty(arr: DisplayProperty[]): boolean {
-    if (arr && arr.length === 1 && !arr[0].id) {
+  private isEmpty(arr: NKPDCount[]): boolean {
+    if (arr && arr.length === 1 && arr[0].nkpd === null) {
       return true;
     }
 

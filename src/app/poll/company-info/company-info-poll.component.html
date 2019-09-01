@@ -31,7 +31,7 @@
               forceSelection="true"
               dataKey="id"
               field="fullName"
-              placeholder="Населено място или част от наименованието" >
+              placeholder="Населено място или част от наименованието (Задължително)" >
             </p-autoComplete>
           </div>
         </div>
@@ -47,7 +47,7 @@
 
       <div class="form-group">
         <label>Адрес</label>
-        <input pInputText type="text" class="form-control" [formControl]="form.controls.companyAddress">
+        <input pInputText type="text" class="form-control" [formControl]="form.controls.companyAddress" placeholder="Задължително">
       </div>
 
       <div class="p-grid">
@@ -77,7 +77,7 @@
                 forceSelection="true" 
                 dataKey="id" 
                 field="displayName"
-                placeholder="Код по КИД или част от наименованието"
+                placeholder="Код по КИД или част от наименованието (Задължително)"
                 [inputStyle]="{'width': '100%'}" >
               </p-autoComplete>
             </div>
