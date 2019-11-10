@@ -22,6 +22,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { MessageModule } from 'primeng/message';
 import { TabViewModule } from 'primeng/components/tabview/tabview';
+import { ToastModule } from 'primeng/toast';
 
 import { AppComponent } from './app.component';
 import { CompanyInfoPollComponent } from './poll/company-info/company-info-poll.component';
@@ -44,7 +45,8 @@ import { ContextMenuSlotDirective } from './logger-schedule/presentation/directi
 import { NomService } from './poll/company-info/company-info.service';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { OpenPositionsComponent } from './company-profile/open-positions/open-positions.component';
-import { CompanyInfoComponent } from './company-profile/company-info/company-info.component';
+import { CompanyService } from './shared/services/company.service';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,6 @@ import { CompanyInfoComponent } from './company-profile/company-info/company-inf
     UrlLoggerScheduleComposerComponent,
     CompanyProfileComponent,
     OpenPositionsComponent,
-    CompanyInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -93,14 +94,18 @@ import { CompanyInfoComponent } from './company-profile/company-info/company-inf
     CalendarModule,
     ContextMenuModule,
     MessageModule,
-    TabViewModule
+    TabViewModule,
+    ToastModule
   ],
   providers: [
+    MessageService,
+
     AppSettingsService,
     NomService,
     PollService,
     AuthService,
-    StorageService
+    StorageService,
+    CompanyService
   ],
   bootstrap: [AppComponent]
 })

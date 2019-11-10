@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-open-positions',
@@ -6,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class OpenPositionsComponent implements OnInit {
+  @Input()
+  set inputForm(inputFormArg: FormGroup) {
+    this.form = inputFormArg;
+  }
+
+  public form: FormGroup;
 
   constructor() { }
 

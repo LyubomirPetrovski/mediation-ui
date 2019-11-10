@@ -6,6 +6,9 @@
       <div class="p-grid">
           <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="p-col-12">
               <h1>Анкетно проучване</h1>
+              <p>Уважаеми колеги,<br>
+                Преди да пристъпите към въпросите на анкетата, моля попълнета следната информация за Вашата фирма.
+              </p>
 
               <app-company-info-poll [inputForm]="form"></app-company-info-poll>
               <app-poll-questions [inputForm]="form"></app-poll-questions>
