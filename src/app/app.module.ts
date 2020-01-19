@@ -47,6 +47,7 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
 import { OpenPositionsComponent } from './company-profile/open-positions/open-positions.component';
 import { CompanyService } from './shared/services/company.service';
 import { MessageService } from 'primeng/api';
+import { RegisterCompanyComponent } from './register-company/register-company.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { MessageService } from 'primeng/api';
     UrlLoggerScheduleComposerComponent,
     CompanyProfileComponent,
     OpenPositionsComponent,
+    RegisterCompanyComponent,
   ],
   imports: [
     BrowserModule,

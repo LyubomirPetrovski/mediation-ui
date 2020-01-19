@@ -1,0 +1,11 @@
+<div class="p-grid">
+  <div class="p-col-6 p-offset-3">
+    <div class="p-grid">
+      <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="p-col-12">
+        <app-company-info-poll [inputForm]="form"></app-company-info-poll>
+
+        <button type="submit" pButton label="Създай регистрация" [disabled]="!form.valid"></button>
+      </form>
+    </div>
+  </div>
+</div>

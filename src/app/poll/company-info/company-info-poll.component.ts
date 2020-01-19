@@ -69,8 +69,8 @@ export class CompanyInfoPollComponent implements OnInit, AfterViewInit {
     inputFormArg.addControl('companyCity', new FormControl('', Validators.required));
     inputFormArg.addControl('municipalityName', new FormControl('', Validators.required));
     inputFormArg.addControl('regionName', new FormControl('', Validators.required));
-    inputFormArg.addControl('companyAddress', new FormControl('', Validators.required));    
-    inputFormArg.addControl('contactPerson', new FormControl('', Validators.required));  
+    inputFormArg.addControl('companyAddress', new FormControl('', Validators.required));
+    inputFormArg.addControl('contactPerson', new FormControl('', Validators.required));
     inputFormArg.addControl('contactPhone', new FormControl('', Validators.required));
     inputFormArg.addControl('contactEmail', new FormControl('', Validators.required));
     inputFormArg.addControl('companyKID', new FormControl());
@@ -83,11 +83,11 @@ export class CompanyInfoPollComponent implements OnInit, AfterViewInit {
   set company(value: CompanyFullData) {
     if (value) {
       this.populateData(value);
-    }    
+    }
   }
 
-  @ViewChild("kidAutoComplete") kidAutoComplete: AutoComplete;
-  @ViewChild("cityAutoComplete") cityAutoComplete: AutoComplete;
+  @ViewChild('kidAutoComplete') kidAutoComplete: AutoComplete;
+  @ViewChild('cityAutoComplete') cityAutoComplete: AutoComplete;
 
   public form: FormGroup;
   public companySize: SelectItem[];
@@ -112,7 +112,7 @@ export class CompanyInfoPollComponent implements OnInit, AfterViewInit {
         distinctUntilChanged(),
         switchMap(search => this.searchKID(search))
       );
-    
+
     this.suggestedCities$ = this.cityAutoComplete.completeMethod
         .pipe(
           debounceTime(400),

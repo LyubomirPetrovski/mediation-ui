@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { first } from "rxjs/operators";
-import { AuthService } from "../shared/services/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs/operators';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component(
     {
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
     get f() { return this.loginForm.controls; }
 
-    onSubmit() {
+    public onSubmit() {
         this.submitted = true;
 
         if (this.loginForm.invalid) {
@@ -53,6 +53,10 @@ export class LoginComponent implements OnInit {
                     this.error = error;
                     this.loading = false;
                 }
-            )
+            );
+    }
+
+    public onRegisterClick() {
+        this.router.navigate(['/register']);
     }
 }

@@ -1,46 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { CompanyService } from '../shared/services/company.service';
-import { CompanyFullData, CompanyAddress, CompanyContact } from './model/company.dto';
+import { Company } from '../company-profile/model/company.entity';
+import { CompanyAddress, CompanyContact } from '../company-profile/model/company.dto';
 import { DocumentRef } from '../shared/entities/document-ref.entity';
-import { first } from 'rxjs/operators';
-import { Company } from './model/company.entity';
+import { CompanyService } from '../shared/services/company.service';
 import { MessageService } from 'primeng/api';
+import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-company-profile',
-  templateUrl: './company-profile.component.html',
+  selector: 'app-register-company',
+  templateUrl: './register-company.component.html',
   styles: []
 })
-export class CompanyProfileComponent implements OnInit {
+export class RegisterCompanyComponent implements OnInit {
   public form: FormGroup;
-  public companyId: string;
-  public company: CompanyFullData;
 
   constructor(
-    private route: ActivatedRoute,
     private builder: FormBuilder,
     private companyService: CompanyService,
-    private messageService: MessageService
-  ) {
+    private messageService: MessageService) {
     this.form = this.builder.group({});
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.companyId = params.get('companyId');
-
-      this.companyService.getCompanyById(this.companyId).subscribe(c => {
-        this.company = c;
-      });
-    });
   }
 
   public onSubmit(model) {
     if (this.form.valid) {
       const company = <Company>{
-        id: this.companyId,
         bulstat: model.companyEIK,
         name: model.companyName,
         address: <CompanyAddress>{
@@ -69,4 +56,5 @@ export class CompanyProfileComponent implements OnInit {
       });
     }
   }
+
 }

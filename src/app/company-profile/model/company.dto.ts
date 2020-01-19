@@ -1,6 +1,6 @@
-import { City } from "src/app/poll/company-info/model/city.entity";
-import { KID } from "src/app/poll/company-info/model/company-KID.entity";
-import { DocumentRef } from "src/app/shared/entities/document-ref.entity";
+import { City } from 'src/app/poll/company-info/model/city.entity';
+import { KID } from 'src/app/poll/company-info/model/company-KID.entity';
+import { DocumentRef } from 'src/app/shared/entities/document-ref.entity';
 
 export interface CompanyFullData {
     id: string;
