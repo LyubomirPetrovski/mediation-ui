@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.currentUser = this.storageService.getItem('user')
+    this.currentUser = this.storageService.getItem('user');
 
     this.sub = this.storageService.watchStorage().subscribe(changedKey => {
       if (changedKey === 'user') {

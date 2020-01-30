@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,17 +37,14 @@ import { PollQuestionsComponent } from './poll/poll-questions/poll-questions.com
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './shared/services/auth.service';
 import { StorageService } from './shared/services/storage.service';
-import { LoggerScheduleCalendarComponent } from './logger-schedule/presentation/logger-schedule-calendar.component';
-import { ScheduleSlotComponent } from './logger-schedule/presentation/schedule-slot.component';
-import { LoggerScheduleFilterComponent } from './logger-schedule/presentation/logger-schedule-filter.component';
-import { UrlLoggerScheduleComposerComponent } from './logger-schedule/composer/url-logger-schedule-composer.component';
-import { ContextMenuSlotDirective } from './logger-schedule/presentation/directives/context-menu.directive';
 import { NomService } from './poll/company-info/company-info.service';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { OpenPositionsComponent } from './company-profile/open-positions/open-positions.component';
 import { CompanyService } from './shared/services/company.service';
 import { MessageService } from 'primeng/api';
 import { RegisterCompanyComponent } from './register-company/register-company.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { BasicAuthInterceptor } from './shared/interceptors/basic-auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -63,14 +60,10 @@ import { RegisterCompanyComponent } from './register-company/register-company.co
     HomeComponent,
     PollQuestionsComponent,
     LoginComponent,
-    LoggerScheduleCalendarComponent,
-    ScheduleSlotComponent,
-    ContextMenuSlotDirective,
-    LoggerScheduleFilterComponent,
-    UrlLoggerScheduleComposerComponent,
     CompanyProfileComponent,
     OpenPositionsComponent,
     RegisterCompanyComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,6 +93,8 @@ import { RegisterCompanyComponent } from './register-company/register-company.co
     ToastModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
+
     MessageService,
 
     AppSettingsService,
