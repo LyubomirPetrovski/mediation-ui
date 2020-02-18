@@ -6,6 +6,7 @@ import { DocumentRef } from '../shared/entities/document-ref.entity';
 import { CompanyService } from '../shared/services/company.service';
 import { MessageService } from 'primeng/api';
 import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-company',
@@ -14,6 +15,7 @@ import { first } from 'rxjs/operators';
 })
 export class RegisterCompanyComponent implements OnInit {
   public form: FormGroup;
+  public saved = false;
 
   constructor(
     private builder: FormBuilder,
@@ -49,6 +51,8 @@ export class RegisterCompanyComponent implements OnInit {
         first()
       ).subscribe(() => {
         this.messageService.add({severity: 'success', summary: 'Успех', detail: 'Данните за компанията са запазени'});
+
+        this.saved = true;
       },
       (ex) => {
         const errorMsg = `Source: ${ex.error.source}\nMessage: ${ex.error.message}`;
