@@ -1,5 +1,5 @@
 <div class="p-grid">
-  <div class="p-col-6 p-offset-3">
+  <div class="p-col">
     <div class="p-grid">
       <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="p-col-12">
         <p-tabView>
@@ -7,7 +7,7 @@
               <app-company-info-poll [inputForm]="form" [company]="company"></app-company-info-poll>
             </p-tabPanel>
             <p-tabPanel header="Отворени позиции" left-icon="fas fa-th-list">
-              <app-open-positions [inputForm]="form"></app-open-positions>
+              <app-open-positions [inputForm]="form" [openPositions]="company.openPositions"></app-open-positions>
             </p-tabPanel>
         </p-tabView>
 

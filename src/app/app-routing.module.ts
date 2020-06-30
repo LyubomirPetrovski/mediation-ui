@@ -6,9 +6,11 @@ import { LoginComponent } from './login/login.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { RegisterCompanyComponent } from './register-company/register-company.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { OpenPositionsReportComponent } from './admin/open-positions-report/open-positions-report.component';
 
 const routes: Routes = [
   { path: 'poll', component: PollComponent },
+  { path: 'open-positions-report', component: OpenPositionsReportComponent },
   { path: 'company/:companyId', component: CompanyProfileComponent },
   // { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },

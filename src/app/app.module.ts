@@ -45,6 +45,8 @@ import { MessageService } from 'primeng/api';
 import { RegisterCompanyComponent } from './register-company/register-company.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { BasicAuthInterceptor } from './shared/interceptors/basic-auth.interceptor';
+import { OpenPositionsReportComponent } from './admin/open-positions-report/open-positions-report.component';
+import { ReportsService } from './shared/services/reports.service';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,7 @@ import { BasicAuthInterceptor } from './shared/interceptors/basic-auth.intercept
     OpenPositionsComponent,
     RegisterCompanyComponent,
     ChangePasswordComponent,
+    OpenPositionsReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,7 +105,8 @@ import { BasicAuthInterceptor } from './shared/interceptors/basic-auth.intercept
     PollService,
     AuthService,
     StorageService,
-    CompanyService
+    CompanyService,
+    ReportsService
   ],
   bootstrap: [AppComponent]
 })

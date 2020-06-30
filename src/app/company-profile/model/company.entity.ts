@@ -1,5 +1,6 @@
-import { CompanyAddress, CompanyContact, CompanySizeEnum } from "./company.dto";
-import { DocumentRef } from "src/app/shared/entities/document-ref.entity";
+import { CompanyAddress, CompanyContact, CompanySizeEnum, OpenPosition } from './company.dto';
+import { DocumentRef } from 'src/app/shared/entities/document-ref.entity';
+import { DisplayProperty } from 'src/app/shared/class/display-property.class';
 
 export interface Company {
     id: string;
@@ -9,4 +10,5 @@ export interface Company {
     contact: CompanyContact;
     kidRef: DocumentRef;
     companySize: string;
+    openPositions: OpenPosition[];
 }
