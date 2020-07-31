@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PollService } from '../shared/services/poll.service';
 import { Poll, NKPDCount } from './model/poll.entity';
@@ -7,7 +7,7 @@ import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-poll',
   templateUrl: './poll.component.html',
-  styles: []
+  styleUrls: ['poll.component.scss']
 })
 export class PollComponent {
   public form: FormGroup;

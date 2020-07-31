@@ -12,7 +12,7 @@ import { NomService } from './company-info.service';
 import { CompanyFullData } from 'src/app/company-profile/model/company.dto';
 
 function eikValidator(c: FormControl) {
-  return isValidEIK(c.value) ? null: { 'eikValidator': { value: c.value } }
+  return isValidEIK(c.value) ? null : { 'eikValidator': { value: c.value } }
 }
 
 function isValidEIK(v) {
@@ -58,8 +58,7 @@ function isValidEIK(v) {
 
 @Component({
   selector: 'app-company-info-poll',
-  templateUrl: './company-info-poll.component.html',
-  styles: []
+  templateUrl: './company-info-poll.component.html'
 })
 export class CompanyInfoPollComponent implements OnInit, AfterViewInit {
   @Input()
