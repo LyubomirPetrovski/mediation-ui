@@ -3,12 +3,22 @@
     <div class="p-grid">
       <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="p-col-12">
         <p-tabView>
+
             <p-tabPanel header="Информация за фирмата" left-icon="fas fa-info-circle">
-              <app-company-info-poll [inputForm]="form" [company]="company"></app-company-info-poll>
+              <app-company-info-poll 
+                [inputForm]="form" 
+                [company]="company">
+              </app-company-info-poll>
             </p-tabPanel>
+
             <p-tabPanel header="Отворени позиции" left-icon="fas fa-th-list">
-              <app-open-positions [inputForm]="form" [openPositions]="company.openPositions"></app-open-positions>
+              <app-open-positions 
+                [inputForm]="form" 
+                [openPositions]="company.openPositions"
+                (addOpenPosition)="onAddOpenPosition($event)">
+              </app-open-positions>
             </p-tabPanel>
+            
         </p-tabView>
 
         <button type="submit" pButton label="Запази" [disabled]="!form.valid"></button>

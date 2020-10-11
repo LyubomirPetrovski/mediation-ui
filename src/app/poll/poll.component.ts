@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { PollService } from '../shared/services/poll.service';
 import { Poll, NKPDCount } from './model/poll.entity';
 import { first } from 'rxjs/operators';
+import { CaptchaService } from '../shared/services/captcha.service';
 
 @Component({
   selector: 'app-poll',
@@ -12,12 +13,19 @@ import { first } from 'rxjs/operators';
 export class PollComponent {
   public form: FormGroup;
   public saved = false;
+  public captchaValid = false;
 
   constructor(
     private builder: FormBuilder,
-    private pollService: PollService
+    private pollService: PollService,
+    private captchaService: CaptchaService
   ) {
     this.form = this.builder.group({});
+  }
+
+  public onCaptchaResponse($event) {
+    this.captchaService.verifyCatcha($event.response)
+      .subscribe(result => this.captchaValid = result.success);
   }
 
   public onSubmit(model) {

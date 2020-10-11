@@ -47,6 +47,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { BasicAuthInterceptor } from './shared/interceptors/basic-auth.interceptor';
 import { OpenPositionsReportComponent } from './admin/open-positions-report/open-positions-report.component';
 import { ReportsService } from './shared/services/reports.service';
+import { OpenPositionEditorComponent } from './company-profile/open-position-editor/open-position-editor.component';
+import { CaptchaService } from './shared/services/captcha.service';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,7 @@ import { ReportsService } from './shared/services/reports.service';
     RegisterCompanyComponent,
     ChangePasswordComponent,
     OpenPositionsReportComponent,
+    OpenPositionEditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,7 +109,8 @@ import { ReportsService } from './shared/services/reports.service';
     AuthService,
     StorageService,
     CompanyService,
-    ReportsService
+    ReportsService,
+    CaptchaService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,7 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+
+  <div class="p-grid">
+    <app-nkpd-count [form]="form.nkpdControl"></app-nkpd-count>
+  </div>
+
+</form>

@@ -1,11 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { OpenPosition, EducationEnum } from '../model/company.dto';
 
 @Component({
   selector: 'app-open-positions',
   templateUrl: './open-positions.component.html',
-  styles: []
+  styleUrls: ['open-positions.component.scss']
 })
 export class OpenPositionsComponent implements OnInit {
   @Input()
@@ -16,6 +16,7 @@ export class OpenPositionsComponent implements OnInit {
   }
 
   @Input() openPositions: OpenPosition[];
+  @Output() addOpenPosition = new EventEmitter();
 
   public form: FormGroup;
 
@@ -31,4 +32,7 @@ export class OpenPositionsComponent implements OnInit {
   ngOnInit() {
   }
 
+  public onAddOpenPositionClick() {
+    this.addOpenPosition.emit();
+  }
 }

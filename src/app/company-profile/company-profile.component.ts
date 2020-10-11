@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CompanyService } from '../shared/services/company.service';
 import { CompanyFullData, CompanyAddress, CompanyContact } from './model/company.dto';
@@ -20,6 +20,7 @@ export class CompanyProfileComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private builder: FormBuilder,
     private companyService: CompanyService,
     private messageService: MessageService
@@ -68,5 +69,9 @@ export class CompanyProfileComponent implements OnInit {
         this.messageService.add({severity: 'success', summary: 'Грешка', detail: `${errorMsg}`});
       });
     }
+  }
+
+  public onAddOpenPosition($event) {
+    this.router.navigate(['../open-position'], { relativeTo: this.route });
   }
 }

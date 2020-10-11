@@ -3,6 +3,10 @@
 
     <div class="form-group">
       <p-table [value]="openPositions">
+        <ng-template pTemplate="caption">
+          <button pButton label="Добави" (click)="onAddOpenPositionClick()"></button>
+        </ng-template>
+
         <ng-template pTemplate="header">
           <tr>
             <th style="width: 800px;">НКПД</th>
@@ -34,6 +38,10 @@
             <td>{{ rowData.count }}</td>
             <td>{{ rowData.deadline }}</td>
           </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          Няма намерени отворени позиции
         </ng-template>
       </p-table>
     </div>
